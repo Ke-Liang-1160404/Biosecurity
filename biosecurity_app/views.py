@@ -1,8 +1,9 @@
 from biosecurity_app import app
-from flask import render_template
+from flask import render_template, request, redirect, url_for,session
 import mysql.connector
 from mysql.connector import FieldType
 import connect
+from flask_hashing import Hashing
 
 dbconn = None
 connection = None
@@ -18,12 +19,29 @@ def getCursor():
 
 @app.route("/")
 def index ():
-      return "Hello World"
+    return render_template('base.html') 
+
 
 @app.route("/home")
 def home():
+   if 'username' in session:
+      return render_template('home.html', username=session['username'])
+   else:
+      return render_template('home.html') 
    
-      return render_template('home.html')
+
+@app.route('/')
+def login():
+    if request.method =="POST":
+        username=request.form['username']
+        pwd=request.form['password']
+        connection = getCursor()
+        connection.execute('select * from staff_admin ')
+        staff=connection.fetchall()
+        print(staff)
+        return render_template('home.html',staff=staff) 
+
+        
 
 
 

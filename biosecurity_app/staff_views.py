@@ -1,9 +1,31 @@
 from biosecurity_app import app
 
+from flask import render_template, request, redirect, url_for,session
+import mysql.connector
+from mysql.connector import FieldType
+import connect
+from flask_hashing import Hashing
+
+dbconn = None
+connection = None
+
+def getCursor():
+    global dbconn
+    global connection
+    connection = mysql.connector.connect(user=connect.dbuser, \
+    password=connect.dbpass, host=connect.dbhost, \
+    database=connect.dbname, autocommit=True)
+    dbconn = connection.cursor()
+    return dbconn
+
 @app.route("/staff/dashboard")
 def staff_dashboard ():
       return "Hello Staff"
 
 @app.route("/staff/profile")
 def staff_profile():
-      return "<h1>Staff Profile</h1>"
+        connection = getCursor()
+        connection.execute('select * from staff_admin ')
+        staff=connection.fetchall()
+        print(staff)
+        return render_template('home.html',staff=staff) 
