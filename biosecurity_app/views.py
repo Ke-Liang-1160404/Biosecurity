@@ -4,6 +4,12 @@ import mysql.connector
 from mysql.connector import FieldType
 import connect
 from flask_hashing import Hashing
+from datetime import datetime
+import re
+
+
+hashing = Hashing(app)
+app.secret_key = 'your secret key'
 
 dbconn = None
 connection = None
@@ -30,16 +36,47 @@ def home():
       return render_template('home.html') 
    
 
-@app.route('/')
-def login():
-    if request.method =="POST":
-        username=request.form['username']
-        pwd=request.form['password']
-        connection = getCursor()
-        connection.execute('select * from staff_admin ')
-        staff=connection.fetchall()
-        print(staff)
-        return render_template('home.html',staff=staff) 
+@app.route('/register', methods=['POST','GET'])
+def register():
+    msg=''
+    if request.method == "GET":
+      return render_template('register.html')
+      
+    elif request.method =='POST':  
+      username=request.form.get('username')
+      email=request.form.get('email')
+      password=request.form.get('password')
+      firstname=request.form.get('firstname')
+      lastname=request.form.get('lastname')
+      address=request.form.get('address')
+      phone=request.form.get('phone')
+      date=datetime.today().strftime("%Y-%m-%d")
+      hashed=hashing.hash_value(password, salt="abcd")
+      print(request.form)
+      print(date)
+      connection=getCursor()
+      connection.execute("Select * from apiarists WHERE username= %s ", (username, ))
+      user=connection.fetchone()
+      connection.execute("Select * from apiarists WHERE email= %s", (email,))
+      email_repeat=connection.fetchone()
+      pattern = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
+      if not re.match(pattern ,password):
+         msg="Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character, and should be at least 8 characters long."
+      elif user:
+         msg='User already existed'
+      elif email_repeat:
+         msg="Email has been used to register an account,"
+         login=True
+      elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+            msg = 'Invalid email address!'
+      elif not re.match(r'[A-Za-z0-9]+', username):
+            msg = 'Username must contain only characters and numbers!'   
+      else:
+          sql="""INSERT INTO apiarists (first_name, last_name, username, password, email, address, phone,date_joined,  status) VALUES ( %s, %s, %s,%s,%s,%s,%s,%s,1)
+          """
+          connection.execute(sql, (firstname, lastname, username, hashed, email, address, phone, date))
+          msg="Registered account successfully"
+    return render_template('register.html', msg=msg, login=login) 
 
         
 
