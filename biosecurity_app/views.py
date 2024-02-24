@@ -60,6 +60,7 @@ def register():
       connection.execute("Select * from apiarists WHERE email= %s", (email,))
       email_repeat=connection.fetchone()
       pattern = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
+      login=False
       if not re.match(pattern ,password):
          msg="Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character, and should be at least 8 characters long."
       elif user:
