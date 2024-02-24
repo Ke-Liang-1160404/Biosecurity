@@ -32,11 +32,18 @@
       <label for="phone" class="form-label">Phone Number</label>
       <input type="text" class="form-control" id="phone" name="phone">
     </div>
+   
+    {% if msg %}
+    <div class="alert {% if not registered %}alert-danger{% endif %}  {% if registered %}alert-success{% endif %}"   role="alert">
+    {{ msg }}
+    </div>
+    {% endif %}
+    
     {% if login %}
     <div class="alert alert-danger" role="alert">
-      {{ msg }}
-      <br>
-      Please try <a href='/login' class="alert-link">login</a> or use another email.
+     <p>
+       Email has been used to register an account, Please try <a href='/login' class="alert-link">login</a> or use another email.
+     </p> 
     </div>
     {% endif %}
     <button type="submit" class="btn btn-dark">Submit</button>
