@@ -25,6 +25,7 @@ def getCursor():
 
 @app.route("/")
 def index ():
+    print("TRAILING_SLASH configuration:", app.url_map.strict_slashes)
     return render_template('base.html') 
 
 
@@ -60,7 +61,7 @@ def register():
       connection.execute("Select * from apiarists WHERE email= %s", (email,))
       email_repeat=connection.fetchone()
       pattern = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
-      login=False
+      toLogin=False
       registered=False
       if not re.match(pattern ,password):
          msg="Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character, and should be at least 8 characters long."
@@ -68,7 +69,7 @@ def register():
          msg='User already existed'
       elif email_repeat:
          msg=""
-         login=True
+         toLogin=True
       elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
             msg = 'Invalid email address!'
       elif not re.match(r'[A-Za-z0-9]+', username):
@@ -80,9 +81,11 @@ def register():
           msg="Registered account successfully"
           registered=True
 
-    return render_template('register.html', msg=msg, login=login, registered=registered) 
+    return render_template('register.html', msg=msg, toLogin=toLogin, registered=registered) 
 
         
-
+@app.route("/signin")
+def signin():
+      return render_template('signin.html')
 
 
