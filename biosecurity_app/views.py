@@ -61,12 +61,13 @@ def register():
       email_repeat=connection.fetchone()
       pattern = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
       login=False
+      registered=False
       if not re.match(pattern ,password):
          msg="Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character, and should be at least 8 characters long."
       elif user:
          msg='User already existed'
       elif email_repeat:
-         msg="Email has been used to register an account,"
+         msg=""
          login=True
       elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
             msg = 'Invalid email address!'
@@ -77,7 +78,9 @@ def register():
           """
           connection.execute(sql, (firstname, lastname, username, hashed, email, address, phone, date))
           msg="Registered account successfully"
-    return render_template('register.html', msg=msg, login=login) 
+          registered=True
+
+    return render_template('register.html', msg=msg, login=login, registered=registered) 
 
         
 
