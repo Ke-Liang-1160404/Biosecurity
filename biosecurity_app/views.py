@@ -105,7 +105,7 @@ def login():
           user=connection.fetchone()
           print(user)
           print(hashed)
-          if user is not None and user[1] == username:
+          if user is not None and user[3] == username:
             session["user"] =username
             return redirect(url_for("user"))
           else:
