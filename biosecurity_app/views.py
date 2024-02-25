@@ -39,10 +39,12 @@ def home():
 
 @app.route('/register', methods=['POST','GET'])
 def register():
+    # set default prompt message to empty string
     msg=''
+    # Render the register the form
     if request.method == "GET":
       return render_template('register.html')
-      
+    #get the input from the form using POST method  
     elif request.method =='POST':  
       username=request.form.get('username')
       email=request.form.get('email')
@@ -52,17 +54,19 @@ def register():
       address=request.form.get('address')
       phone=request.form.get('phone')
       date=datetime.today().strftime("%Y-%m-%d")
+      #hashing the password to hashed password
       hashed=hashing.hash_value(password, salt="abcd")
-      print(request.form)
-      print(date)
+      #query the input and compare the input user and email with existed user and email address to check if they are already in the database
       connection=getCursor()
       connection.execute("Select * from apiarists WHERE username= %s ", (username, ))
       user=connection.fetchone()
       connection.execute("Select * from apiarists WHERE email= %s", (email,))
       email_repeat=connection.fetchone()
+      #using regular expression to validate password to have Upper case, lover case, number, special sign and at least 8 characters within it
       pattern = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
       toLogin=False
       registered=False
+      #haddle different validations and set the  message to prompt related information
       if not re.match(pattern ,password):
          msg="Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character, and should be at least 8 characters long."
       elif user:
@@ -74,6 +78,7 @@ def register():
             msg = 'Invalid email address!'
       elif not re.match(r'[A-Za-z0-9]+', username):
             msg = 'Username must contain only characters and numbers!'   
+      #after validation, insert the input into database
       else:
           sql="""INSERT INTO apiarists (first_name, last_name, username, password, email, address, phone,date_joined,  status) VALUES ( %s, %s, %s,%s,%s,%s,%s,%s,1)
           """
