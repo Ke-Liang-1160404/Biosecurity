@@ -4,13 +4,14 @@ import mysql.connector
 from mysql.connector import FieldType
 import connect
 from flask_hashing import Hashing
-from datetime import datetime
+from datetime import datetime, timedelta
 import re
 
 
 hashing = Hashing(app)
-app.secret_key = 'your secret key'
-
+app.secret_key = 'hello'
+app.url_map.strict_slashes = False 
+app.permanent_session_lifetime=timedelta(minutes =5)
 dbconn = None
 connection = None
 
@@ -25,14 +26,16 @@ def getCursor():
 
 @app.route("/")
 def index ():
-    print("TRAILING_SLASH configuration:", app.url_map.strict_slashes)
-    return render_template('base.html') 
+    if "user" in session:
+      return redirect (url_for("user"))
+    else:
+      return render_template('base.html') 
 
 
 @app.route("/home")
 def home():
-   if 'username' in session:
-      return render_template('home.html', username=session['username'])
+   if "user" in session:
+      return redirect (url_for("user"))
    else:
       return render_template('home.html') 
    
@@ -89,8 +92,34 @@ def register():
     return render_template('register.html', msg=msg, toLogin=toLogin, registered=registered) 
 
         
-@app.route("/signin")
-def signin():
-      return render_template('signin.html')
+@app.route("/login", methods=['POST','GET'])
+def login():
+      msg=''
+      if request.method=='POST':
+          session.permanent = True
+          username=request.form.get('username')
+          password=request.form.get('password')
+          hashed=hashing.hash_value(password, salt="abcd")
+          connection=getCursor()
+          connection.execute("select * from apiarists where username=%s and password=%s;", (username,hashed,))
+          user=connection.fetchone()
+          print(user)
+          print(hashed)
+          if user is not None and user[1] == username:
+            session["user"] =username
+            return redirect(url_for("user"))
+          else:
+             msg='username or password not correct Please try again'
+             print(msg)
+             return render_template("login.html", msg=msg)
+      else:
+          if "user" in session:
+             return redirect (url_for("user"))
+          return render_template('login.html')
 
 
+
+@app.route("/logout")
+def logout():
+    session.pop("user", None)
+    return redirect(url_for("login")) 
