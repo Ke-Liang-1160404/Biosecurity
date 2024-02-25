@@ -47,17 +47,17 @@ INSERT INTO staff_admin (`first_name`, `last_name`, `username`, `password`, `ema
 VALUES
 ('Emily', 'Brown', 'emily_brown', '3f9a05750d8bf6d7ba9d3c2444c2ac30479afc44d814308460eb8816ad1ce03b', 'emily.brown@staff.com', '123 Bee St, Auckland', '111-222-3333', '2022-01-15', 'staff', 'Research', 1),
 ('David', 'Wilson', 'david_wilson', '8882834cabdb4f0dfae4b2892798c0bd69d3f090cc8d5d07ee3535d0d04ccb4b', 'david.wilson@staff.com', '456 Honey Rd, Wellington', '444-555-6666', '2021-12-20', 'staff', 'Research', 1),
-('Sarah', 'Jones', 'sarah_jones', 'bb7e9554ebf937bfce131d79ec74dfc6eaa3138fdaa78756e53256654a8fabf1', 'sarah.jones@staff.com', '789 Pollen Ave, Christchurch', '777-888-9999', '2023-03-10', 'staff', 'Marketing', 1);
-('John ', 'Murray', 'john_murray', '674f27c0c25a522dfd497dd8e147ddbe006d11a57f0a543c0013b2329e26617e', 'john.murray@admin.com', '123 Victoria Rd, Wellington', '444-555-6666', '2021-12-20', 'admin', 'Manager', 1),
+('Sarah', 'Jones', 'sarah_jones', 'bb7e9554ebf937bfce131d79ec74dfc6eaa3138fdaa78756e53256654a8fabf1', 'sarah.jones@staff.com', '789 Pollen Ave, Christchurch', '777-888-9999', '2023-03-10', 'staff', 'Marketing', 1),
+('John', 'Murray', 'john_murray', '674f27c0c25a522dfd497dd8e147ddbe006d11a57f0a543c0013b2329e26617e', 'john.murray@admin.com', '123 Victoria Rd, Wellington', '444-555-6666', '2021-12-20', 'admin', 'Manager', 1);
 
 
 
 -- Sample data for Apiarists
 INSERT INTO apiarists (`first_name`, `last_name`, `username`, `password`, `email`, `address`, `phone`, `date_joined`, `status`)
 VALUES
-('Michael', 'Smith', 'michael_smith', 'password123', 'michael.smith@example.com', '10 Honeycomb St, Auckland', '123-456-7890', '2023-05-10', 1),
-('Emma', 'Johnson', 'emma_johnson', 'password456', 'emma.johnson@example.com', '20 Beehive Rd, Wellington', '987-654-3210', '2024-02-15', 1),
-('William', 'Davis', 'william_davis', 'password789', 'william.davis@example.com', '30 Pollen Way, Christchurch', '555-555-5555', '2022-10-20', 0);
+('Michael', 'Smith', 'michael_smith', '3f9a05750d8bf6d7ba9d3c2444c2ac30479afc44d814308460eb8816ad1ce03b', 'michael.smith@example.com', '10 Honeycomb St, Auckland', '123-456-7890', '2023-05-10', 1),
+('Emma', 'Johnson', 'emma_johnson', '8882834cabdb4f0dfae4b2892798c0bd69d3f090cc8d5d07ee3535d0d04ccb4b', 'emma.johnson@example.com', '20 Beehive Rd, Wellington', '987-654-3210', '2024-02-15', 1),
+('William', 'Davis', 'william_davis', 'bb7e9554ebf937bfce131d79ec74dfc6eaa3138fdaa78756e53256654a8fabf1', 'william.davis@example.com', '30 Pollen Way, Christchurch', '555-555-5555', '2022-10-20', 0);
 
 
 INSERT INTO pest_disease (item_type, presence, common_name, scientific_name, key_characteristics, biology_description, symptoms, primary_image)
