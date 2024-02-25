@@ -101,11 +101,11 @@ def login():
           password=request.form.get('password')
           hashed=hashing.hash_value(password, salt="abcd")
           connection=getCursor()
-          connection.execute("select * from apiarists where username=%s and password=%s;", (username,hashed,))
+          connection.execute("select username,password from apiarists where username=%s and password=%s;", (username,hashed,))
           user=connection.fetchone()
           print(user)
           print(hashed)
-          if user is not None and user[3] == username:
+          if user is not None and user[0] == username:
             session["user"] =username
             return redirect(url_for("user"))
           else:
