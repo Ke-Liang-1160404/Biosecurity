@@ -45,9 +45,11 @@ CREATE TABLE IF NOT EXISTS pest_disease
 -- Sample data for Staff/Admin
 INSERT INTO staff_admin (`first_name`, `last_name`, `username`, `password`, `email`, `address`, `work_phone_number`, `hire_date`, `position`, `department`, `status`)
 VALUES
-('Emily', 'Brown', 'emily_brown', 'password123', 'emily.brown@example.com', '123 Bee St, Auckland', '111-222-3333', '2022-01-15', 'Manager', 'Operations', 1),
-('David', 'Wilson', 'david_wilson', 'password456', 'david.wilson@example.com', '456 Honey Rd, Wellington', '444-555-6666', '2021-12-20', 'Supervisor', 'Research', 1),
-('Sarah', 'Jones', 'sarah_jones', 'password789', 'sarah.jones@example.com', '789 Pollen Ave, Christchurch', '777-888-9999', '2023-03-10', 'Coordinator', 'Marketing', 0);
+('Emily', 'Brown', 'emily_brown', '3f9a05750d8bf6d7ba9d3c2444c2ac30479afc44d814308460eb8816ad1ce03b', 'emily.brown@staff.com', '123 Bee St, Auckland', '111-222-3333', '2022-01-15', 'staff', 'Research', 1),
+('David', 'Wilson', 'david_wilson', '8882834cabdb4f0dfae4b2892798c0bd69d3f090cc8d5d07ee3535d0d04ccb4b', 'david.wilson@staff.com', '456 Honey Rd, Wellington', '444-555-6666', '2021-12-20', 'staff', 'Research', 1),
+('Sarah', 'Jones', 'sarah_jones', 'bb7e9554ebf937bfce131d79ec74dfc6eaa3138fdaa78756e53256654a8fabf1', 'sarah.jones@staff.com', '789 Pollen Ave, Christchurch', '777-888-9999', '2023-03-10', 'staff', 'Marketing', 1);
+('John ', 'Murray', 'john_murray', '674f27c0c25a522dfd497dd8e147ddbe006d11a57f0a543c0013b2329e26617e', 'john.murray@admin.com', '123 Victoria Rd, Wellington', '444-555-6666', '2021-12-20', 'admin', 'Manager', 1),
+
 
 
 -- Sample data for Apiarists
