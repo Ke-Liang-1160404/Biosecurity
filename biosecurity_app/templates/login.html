@@ -16,12 +16,11 @@
 
 
 
-
-    <div class="alert alert-danger" role="alert">
-     <p>
-{{msg}}
-     </p>
+    {% if msg %}
+    <div class="alert alert-danger"   role="alert">
+    {{ msg }}
     </div>
+    {% endif %}
 
     <button type="submit" class="btn btn-dark">Submit</button>
   </form>

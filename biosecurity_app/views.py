@@ -24,20 +24,26 @@ def getCursor():
     dbconn = connection.cursor()
     return dbconn
 
-@app.route("/")
-def index ():
+# check which role is in session
+def redirect_based_on_role(html_file):
     if "user" in session:
-      return redirect (url_for("user"))
+        return redirect(url_for("user"))
+    elif "staff" in session:
+        return redirect(url_for("staff"))
+    elif "admin" in session:
+        return redirect(url_for("admin"))
     else:
-      return render_template('base.html') 
+        return render_template(html_file)
+
+
+@app.route("/")
+def index():
+    return redirect_based_on_role('base.html')
 
 
 @app.route("/home")
 def home():
-   if "user" in session:
-      return redirect (url_for("user"))
-   else:
-      return render_template('home.html') 
+   return redirect_based_on_role('home.html')
    
 
 @app.route('/register', methods=['POST','GET'])
@@ -97,29 +103,57 @@ def login():
       msg=''
       if request.method=='POST':
           session.permanent = True
+          #---------get username and password from frontend -----------#
           username=request.form.get('username')
           password=request.form.get('password')
+          #--------------------#
+          #--------hassing the password------------#
           hashed=hashing.hash_value(password, salt="abcd")
+         
+          #---------query the apiarist from database-----------#
+
           connection=getCursor()
           connection.execute("select username,password from apiarists where username=%s and password=%s;", (username,hashed,))
           user=connection.fetchone()
-          print(user)
-          print(hashed)
+         
+          #---------query the staff from database-----------#
+
+
+          connection.execute("select username,password,position from staff_admin where username=%s and password=%s and position='staff';",(username,hashed,))
+          staff=connection.fetchone()
+
+          #---------query the admin from database-----------#
+
+          connection.execute("select username,password,position from staff_admin where username=%s and password=%s and position='admin';",(username,hashed,))
+          admin=connection.fetchone()
+
+          #---------compared the user input to check user's role if no position, then user is an apiarists-----------#
+      
           if user is not None and user[0] == username:
             session["user"] =username
-            return redirect(url_for("user"))
+            return redirect(url_for("user", user=user))
+          
+          #---------check user's position, staff or admin-----------#
+          elif staff is not None and staff[0] == username:
+            session["staff"] =username
+            return redirect(url_for("staff",staff=staff))
+          elif admin is not None and admin[0] == username:
+            session["admin"] =username
+            return redirect(url_for("admin",admin=admin))
+          
+          #---------Not matching any role from database-----------#
+          
           else:
              msg='username or password not correct Please try again'
-             print(msg)
              return render_template("login.html", msg=msg)
       else:
-          if "user" in session:
-             return redirect (url_for("user"))
-          return render_template('login.html')
+          return redirect_based_on_role('login.html')
 
 
 
 @app.route("/logout")
 def logout():
     session.pop("user", None)
+    session.pop("staff", None)
+    session.pop("admin", None)
     return redirect(url_for("login")) 

@@ -17,7 +17,7 @@ connection = None
 def getCursor():
     global dbconn
     global connection
-    connection = mysql.connector.connect(user=connect.dbuser, \
+    connection = mysql.connector.connect(admin=connect.dbuser, \
     password=connect.dbpass, host=connect.dbhost, \
     database=connect.dbname, autocommit=True)
     dbconn = connection.cursor()
@@ -30,3 +30,14 @@ def admin_dashboard ():
 @app.route("/admin/profile")
 def admin_profile():
       return "<h1>Admin Profile</h1>"
+
+
+@app.route("/admin")
+def admin():
+    if "admin" in session:
+        admin = session["admin"]  
+        return render_template("admin.html", admin=admin)
+
+    else:
+       
+        return redirect(url_for("login"))
