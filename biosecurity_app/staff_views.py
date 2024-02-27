@@ -42,3 +42,9 @@ def staff():
     else:
        
         return redirect(url_for("login"))
+    
+@app.route("/staff/apiarists")
+def staffApiarists():
+   return render_template("editUser.html")
+        
+    
