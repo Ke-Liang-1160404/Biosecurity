@@ -41,3 +41,8 @@ def admin():
     else:
        
         return redirect(url_for("login"))
+    
+@app.route("/admin/apiarists")
+def adminApiarists():
+        return render_template("editUser.html")
+    
