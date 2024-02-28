@@ -6,6 +6,7 @@ import connect
 from flask_hashing import Hashing
 from datetime import datetime
 import re
+from biosecurity_app.views import getAllApiarists
 
 
 hashing = Hashing(app)
@@ -14,14 +15,6 @@ app.url_map.strict_slashes = False
 dbconn = None
 connection = None
 
-def getCursor():
-    global dbconn
-    global connection
-    connection = mysql.connector.connect(staff=connect.dbuser, \
-    password=connect.dbpass, host=connect.dbhost, \
-    database=connect.dbname, autocommit=True)
-    dbconn = connection.cursor()
-    return dbconn
 @app.route("/staff/dashboard")
 def staff_dashboard ():
       return "Hello Staff"
@@ -45,6 +38,7 @@ def staff():
     
 @app.route("/staff/apiarists")
 def staffApiarists():
-   return render_template("editUser.html")
+   getAllApiarists()
+   return render_template("editUser.html", allApiarists=getAllApiarists())
         
     

@@ -157,3 +157,15 @@ def logout():
     session.pop("staff", None)
     session.pop("admin", None)
     return redirect(url_for("login")) 
+
+
+def getAllApiarists():
+    sql="""Select apiarists_id, username, first_name,last_name, email, phone, address, date_joined, status from apiarists"""
+    connection=getCursor()
+    connection.execute(sql)
+    allApiarists=connection.fetchall()
+
+
+    return allApiarists
+
+
