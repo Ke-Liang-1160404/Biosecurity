@@ -1,41 +1,34 @@
-create schema biosecurity;
-
-use biosecurity;
-
-CREATE TABLE IF NOT EXISTS apiarists
+CREATE TABLE IF NOT EXISTS `apiarists`
 (
 `apiarists_id` INT auto_increment PRIMARY KEY NOT NULL,
-`first_name` varchar(25)NOT NULL,
-`last_name` varchar(25) NOT NULL,
+`first_name` varchar(25),
+`last_name` varchar(25) not null,
 `username` varchar(100) NOT NULL,
 `password` varchar(255) NOT NULL,
 `email` varchar(320) UNIQUE,
 `address` varchar(320) not null,
-`phone` varchar(20) UNIQUE,
+`phone` varchar(15) not null,
 `date_joined` date NOT NULL,
-status tinyint default 1
+`status` tinyint default 1
 );
 
-CREATE TABLE IF NOT EXISTS staff_admin
+CREATE TABLE IF NOT EXISTS `staff_admin`
 (
 `staff_id` INT auto_increment PRIMARY KEY NOT NULL,
-`first_name` varchar(25) NOT NULL,
-`last_name` varchar(25) NOT NULL,
+`first_name` varchar(25),
+`last_name` varchar(25) not null,
+`email` varchar(320) not null,
 `username` varchar(100) NOT NULL,
 `password` varchar(255) NOT NULL,
-`email` varchar(320) UNIQUE,
 `address` varchar(320) not null,
-`work_phone_number` varchar(20) not null,
+`work_phone_number` varchar(15) not null,
 `hire_date` date NOT NULL,
 `position` varchar(25) not null,
 `department` varchar(25) not null,
 `status` tinyint default 1
 );
 
-
-
-
-CREATE TABLE IF NOT EXISTS pest_disease
+CREATE TABLE IF NOT EXISTS `pest_disease`
 (
 `id` INT auto_increment PRIMARY KEY NOT NULL,
 `item_type` ENUM('pest','disease') not null,
@@ -47,6 +40,7 @@ CREATE TABLE IF NOT EXISTS pest_disease
 `symptoms` varchar(320) not null,
 `primary_image` varchar(25) not null
 );
+
 
 CREATE TABLE IF NOT EXISTS `image` (
   `imageID` INT NOT NULL,
@@ -60,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `image` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
+
 -- Sample data for Staff/Admin
 INSERT INTO staff_admin (`first_name`, `last_name`, `username`, `password`, `email`, `address`, `work_phone_number`, `hire_date`, `position`, `department`, `status`)
 VALUES
@@ -67,6 +62,7 @@ VALUES
 ('David', 'Wilson', 'david_wilson', '8882834cabdb4f0dfae4b2892798c0bd69d3f090cc8d5d07ee3535d0d04ccb4b', 'david.wilson@staff.com', '456 Honey Rd, Wellington', '444-555-6666', '2021-12-20', 'staff', 'Research', 1),
 ('Sarah', 'Jones', 'sarah_jones', 'bb7e9554ebf937bfce131d79ec74dfc6eaa3138fdaa78756e53256654a8fabf1', 'sarah.jones@staff.com', '789 Pollen Ave, Christchurch', '777-888-9999', '2023-03-10', 'staff', 'Marketing', 1),
 ('John', 'Murray', 'john_murray', '674f27c0c25a522dfd497dd8e147ddbe006d11a57f0a543c0013b2329e26617e', 'john.murray@admin.com', '123 Victoria Rd, Wellington', '444-555-6666', '2021-12-20', 'admin', 'Manager', 1);
+
 
 
 -- Sample data for Apiarists
@@ -77,7 +73,7 @@ VALUES
 ('William', 'Davis', 'william_davis', 'bb7e9554ebf937bfce131d79ec74dfc6eaa3138fdaa78756e53256654a8fabf1', 'william.davis@example.com', '30 Pollen Way, Christchurch', '555-555-5555', '2022-10-20', 0);
 
 
-INSERT INTO pest_disease (`item_type`, `presence`, `common_name`, `scientific_name`, `key_characteristics`, `biology_description`, `symptoms`, `primary_image`)
+INSERT INTO pest_disease (item_type, presence, common_name, scientific_name, key_characteristics, biology_description, symptoms, primary_image)
 VALUES
 ('pest', 1, 'Varroa mite', 'Varroa destructor', 'External parasite', 'Varroa mites reproduce in brood cells and feed on both adult and larval bees.', 'Deformed wings, crawling bees, weakened colonies', 'varroa_mite.jpg'),
 ('pest', 1, 'Small hive beetle', 'Aethina tumida', 'Small beetle, larvae feed on hive contents', 'Small hive beetles can cause fermentation of honey, making it unpalatable for bees.', 'Slimy honey, beetles in the hive', 'small_hive_beetle.jpg'),
