@@ -54,7 +54,7 @@ def staff_profile():
 def staff():
     if "staff" in session:
         staff = session["staff"]  
-        return render_template("staff.html", staff=staff)
+        return render_template("managingUser.html", staff=staff)
     else:
        
         return redirect(url_for("login"))

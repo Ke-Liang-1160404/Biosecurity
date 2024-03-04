@@ -33,7 +33,7 @@ def admin_profile():
 def admin():
     if "admin" in session:
         admin = session["admin"]  
-        return render_template("admin.html", admin=admin)
+        return render_template("managingUser.html", admin=admin)
 
     else:
        
@@ -66,4 +66,42 @@ def admineditapiarist():
   return redirect(url_for('adminApiarists'))
 
 
-    
+@app.route("/admin/staff")
+def adminStaff():
+        connection=getCursor()
+        connection.execute("SELECT staff_id,username,first_name,last_name,email,work_phone_number, address,hire_date,position,department,status from staff_admin where position='staff';")
+        allStaff=connection.fetchall()
+        if "admin" in session:
+          admin = session["admin"]  
+          return render_template("allStaff.html", allStaff=allStaff, admin=admin)
+        else:
+       
+          return redirect(url_for("login"))
+        
+@app.route("/admin/staff/<id>")
+def admin_single_staff(id):
+     connection = getCursor()
+     connection.execute("SELECT * FROM staff_admin WHERE staff_id = %s;", (id,))
+     staff = connection.fetchone()
+
+
+     if "admin" in session:
+        admin = session["admin"]
+        return render_template("allStaff.html", staff=staff, admin=admin)
+     else:
+        return redirect(url_for("login"))
+     
+
+@app.route("/admin/staff/edit", methods=["POST"])
+def admin_edit_staff():
+  if request.method == "POST":
+      address=request.form.get("address")
+      phone=request.form.get("phone")
+      email=request.form.get("email")
+      status=request.form.get("status")
+      id=request.form.get("id")
+      print(address,phone,email,status,email)
+      connection=getCursor()
+      sql="""UPDATE apiarists SET address=%s,phone=%s,email=%s,status=%s where apiarists_id=%s;"""
+      connection.execute(sql,(address,phone,email,status,id,))
+  return redirect(url_for('adminApiarists'))
