@@ -1,18 +1,18 @@
-CREATE TABLE IF NOT EXISTS apiarists
+CREATE TABLE IF NOT EXISTS `apiarists`
 (
 `apiarists_id` INT auto_increment PRIMARY KEY NOT NULL,
 `first_name` varchar(25),
 `last_name` varchar(25) not null,
-`email` varchar(320) UNIQUE,
 `username` varchar(100) NOT NULL,
 `password` varchar(255) NOT NULL,
+`email` varchar(320) UNIQUE,
 `address` varchar(320) not null,
 `phone` varchar(15) not null,
 `date_joined` date NOT NULL,
 `status` tinyint default 1
 );
 
-CREATE TABLE IF NOT EXISTS staff_admin
+CREATE TABLE IF NOT EXISTS `staff_admin`
 (
 `staff_id` INT auto_increment PRIMARY KEY NOT NULL,
 `first_name` varchar(25),
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS staff_admin
 `status` tinyint default 1
 );
 
-CREATE TABLE IF NOT EXISTS pest_disease
+CREATE TABLE IF NOT EXISTS `pest_disease`
 (
 `id` INT auto_increment PRIMARY KEY NOT NULL,
 `item_type` ENUM('pest','disease') not null,
