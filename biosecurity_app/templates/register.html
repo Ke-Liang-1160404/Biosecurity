@@ -2,41 +2,41 @@
 {% block title %}Register New Account {% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+
   <form action="{{ url_for('register') }}" method="POST" autocomplete="off" class="bg-warning p-4 rounded">
-    <div class="mb-3">
-      <label for="username" class="form-label">Username</label>
-      <input type="text" class="form-control" id="username" name="username" required>
+    <div class="mb-3 form-floating form-group">
+      <input type="text" class="form-control" id="username" name="username" placeholder="" required>
+      <label for="username">Username</label>
     </div>
-    <div class="mb-3">
+    <div class="mb-3 form-floating form-group">
+      <input type="password" class="form-control" id="password" name="password" placeholder="" required>
       <label for="password" class="form-label">Password</label>
-      <input type="password" class="form-control" id="password" name="password" required>
     </div>
-    <div class="mb-3">
+    <div class="mb-3 form-floating form-group">
+      <input type="email" class="form-control" id="email" name="email" placeholder="" required>
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" name="email" required>
     </div>
-    <div class="mb-3">
+    <div class="mb-3 form-floating form-group">
+      <input type="text" class="form-control" id="firstname" name="firstname" placeholder="" required>
       <label for="firstname" class="form-label">First Name</label>
-      <input type="text" class="form-control" id="firstname" name="firstname" required>
     </div>
-    <div class="mb-3">
+    <div class="mb-3 form-floating form-group">
+      <input type="text" class="form-control" id="lastname" name="lastname" placeholder="" required>
       <label for="lastname" class="form-label">Last Name</label>
-      <input type="text" class="form-control" id="lastname" name="lastname" required>
     </div>
-    <div class="mb-3">
+    <div class="mb-3 form-floating form-group">
+      <input type="text" class="form-control" id="address" name="address" placeholder="" required>
       <label for="address" class="form-label">Address</label>
-      <input type="text" class="form-control" id="address" name="address" required>
     </div>
-    <div class="mb-3">
+    <div class="mb-3 form-floating form-group">
+      <input type="text" class="form-control" id="phone" name="phone" placeholder="">
       <label for="phone" class="form-label">Phone Number</label>
-      <input type="text" class="form-control" id="phone" name="phone">
     </div>
    
     {% if msg %}
     <div class="alert {% if not registered %}alert-danger{% endif %}  {% if registered %}alert-success{% endif %}"   role="alert">
     {{ msg }}
-    </div>
+
     {% endif %}
     
     {% if login %}
