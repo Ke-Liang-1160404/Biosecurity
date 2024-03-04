@@ -23,6 +23,19 @@ def get_single_apiarist(id):
     connection.execute("SELECT * FROM apiarists WHERE apiarists_id = %s;", (id,))
     apiarist = connection.fetchone()
     return apiarist
+
+def edit_apiarist():
+   if request.method == "POST":
+      address=request.form.get("address")
+      phone=request.form.get("phone")
+      email=request.form.get("email")
+      status=request.form.get("status")
+      id=request.form.get("id")
+      print(address,phone,email,status,email)
+      connection=getCursor()
+      sql="""UPDATE apiarists SET address=%s,phone=%s,email=%s,status=%s where apiarists_id=%s;"""
+      connection.execute(sql,(address,phone,email,status,id,))
+     
    
 
 @app.route("/staff/dashboard")
@@ -48,20 +61,30 @@ def staff():
     
 @app.route("/staff/apiarists")
 def staffApiarists():
-    if "staff" in session:
-        staff = session["staff"]
-        all_apiarists = getAllApiarists()
-        print(session)
-        return render_template("allUser.html", allApiarists=all_apiarists, staff=staff)
-    else:
-        return redirect(url_for("login"))
-
-        
-@app.route("/staff/apiarists/<id>")
-def staff_single_apiarist(id):
     
     if "staff" in session:
         staff = session["staff"]
-        return render_template("allUser.html", apiarist=get_single_apiarist(id), staff=staff)
+        all_apiarists = getAllApiarists()
+
+        return render_template("allUser.html", allApiarists=all_apiarists, staff=staff)
     else:
         return redirect(url_for("login"))
+ 
+        
+@app.route("/staff/apiarists/<id>")
+def staff_single_apiarist(id):
+    apiarist=get_single_apiarist(id)
+    if "staff" in session:
+        staff = session["staff"]
+        return render_template("user.html", apiarist=apiarist, staff=staff)
+    else:
+        return redirect(url_for("login"))
+
+@app.route("/staff/apiarists/edit", methods=["POST"])
+def staffeditapiarist():
+  edit_apiarist()
+  return redirect(url_for('staffApiarists'))
+
+
+    
+

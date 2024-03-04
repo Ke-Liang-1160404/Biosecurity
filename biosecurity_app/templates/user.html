@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Page{% endblock %}
+
+{% block content %}
+
+
+<h1>Edit User</h1>
+{% if 'staff' in session %} /staff/editapiarist  {% elif 'admin' in session %} /admin/editapiarist    {% endif %}
+
+<form action="{% if 'staff' in session %} /staff/apiarists/edit  {% elif 'admin' in session %} /admin/apiarists/edit    {% endif %}" method="POST" class="bg-warning  p-4 rounded">
+  <div class="mx-auto p-2  form-floating form-group ">
+    <input type="text" class="form-control" id="id" name="id"  value="{{apiarist[0]}}" readonly>
+    <label for="id" class="form-label" >ID</label>
+  </div>
+  <div class="mx-auto p-2  form-floating form-group ">
+    <input type="text" class="form-control" id="fname" name="fname"  value="{{apiarist[1]}}" readonly>
+    <label for="fname" class="form-label" >First Name</label>
+  </div>
+
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="lname" name="lname"  value="{{apiarist[2]}}" readonly>
+    <label for="lname" class="form-label" >Last Nanme</label>
+  </div>
+
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="username" name="username"  value="{{apiarist[3]}}" readonly>
+    <label for="username" class="form-label" >User Name</label>
+  </div>
+  
+  <div class="mx-auto p-2  form-floating form-group">
+  
+    <input type="text" class="form-control" id="email" name="email"  value="{{apiarist[5]}}" required>
+    <label for="email" class="form-label" >Email</label>
+  </div>
+  
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="address" name="address"  value="{{apiarist[6]}}" required>
+    <label for="address" class="form-label" >address</label> 
+  </div>
+
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="phone" name="phone"  value="{{apiarist[7]}}" required>
+    <label for="phone" class="form-label" >Phone</label>
+  </div>
+
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="date" name="date"  value="{{apiarist[8]}}" readonly>
+    <label for="date" class="form-label" >Member Since</label>
+  </div>
+  <div class="mx-auto p-2 form-floating form-group">
+    <select class="form-select my-auto" id="status" name="status" required>
+      {% if apiarist[9] == 1  %}
+      <option value="{{ apiarist[9] }}" selected >
+       Activated 
+      </option>
+      <option value="0" required>Deactivate the user</option>
+      {% elif apiarist[9] == 0 %}
+      <option value="{{ apiarist[9] }}" selected >
+        Deactivated
+       </option>
+      <option value="1" required>Activate the user</option>
+      {% endif %}
+    </select>
+    <label for="status" class="form-label">Active Status</label>
+  </div>
+  <button type="submit" class="btn btn-dark">Submit</button>
+
+</form>
+
+
+
+
+{% endblock %}
