@@ -8,6 +8,7 @@ from datetime import datetime
 import re
 
 
+
 hashing = Hashing(app)
 app.secret_key = 'hello'
 app.url_map.strict_slashes = False 

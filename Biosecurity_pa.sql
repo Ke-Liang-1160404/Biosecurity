@@ -42,6 +42,19 @@ CREATE TABLE IF NOT EXISTS pest_disease
 );
 
 
+CREATE TABLE IF NOT EXISTS `image` (
+  `imageID` INT NOT NULL,
+  `pestID` INT NOT NULL,
+  `imageURL` VARCHAR(100) NULL,
+  UNIQUE INDEX `imageID_UNIQUE` (`imageID` ASC) VISIBLE,
+  INDEX `id_idx` (`pestID` ASC) VISIBLE,
+  CONSTRAINT `id`
+    FOREIGN KEY (`pestID`)
+    REFERENCES `biosecurity`.`pest_disease` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+
 -- Sample data for Staff/Admin
 INSERT INTO staff_admin (`first_name`, `last_name`, `username`, `password`, `email`, `address`, `work_phone_number`, `hire_date`, `position`, `department`, `status`)
 VALUES
