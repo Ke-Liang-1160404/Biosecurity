@@ -1,3 +1,8 @@
+create schema Biosecurity;
+
+use Biosecurity;
+
+
 CREATE TABLE IF NOT EXISTS `apiarists`
 (
 `apiarists_id` INT auto_increment PRIMARY KEY NOT NULL,
