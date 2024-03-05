@@ -10,8 +10,8 @@
 
 <form action="/admin/staff/edit" method="POST" class="bg-warning  p-4 rounded">
   <div class="mx-auto p-2  form-floating form-group ">
-    <input type="text" class="form-control" id="id" name="id"  value="{{staff[0]}}" readonly>
-    <label for="id" class="form-label" >ID</label>
+    <input type="text" class="form-control" id="id" name="id"  value="{{staff[0]}}" hidden readonly>
+    <label for="id" class="form-label" hidden>ID</label>
   </div>
   <div class="mx-auto p-2  form-floating form-group ">
     <input type="text" class="form-control" id="fname" name="fname"  value="{{staff[1]}}" readonly>
