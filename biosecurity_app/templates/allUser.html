@@ -24,17 +24,27 @@
       {% for user in allApiarists %}
       <tr>
         {% for field in user %}
-        <td>
-          {% if 'staff' in session %}
-          <a href="{{url_for('staff_single_apiarist', id=user[0])}}" class="text-decoration-none text-dark">
-            {{field}}
-          </a>
-          {% elif 'admin' in session %}
-          <a href="{{url_for('admin_single_apiarist', id=user[0])}}" class="text-decoration-none text-dark">
-            {{field}}
-          </a>
+          {% if loop.index == 9 %}
+            <td>
+              {% if field == 1 %}
+                Active
+              {% else %}
+                Deactivated
+              {% endif %}
+            </td>
+          {% else %}
+            <td>
+              {% if 'staff' in session %}
+                <a href="{{url_for('staff_single_apiarist', id=user[0])}}" class="text-decoration-none text-dark">
+                  {{field}}
+                </a>
+              {% elif 'admin' in session %}
+                <a href="{{url_for('admin_single_apiarist', id=user[0])}}" class="text-decoration-none text-dark">
+                  {{field}}
+                </a>
+              {% endif %}
+            </td>
           {% endif %}
-        </td>
         {% endfor %}
       </tr>
       {% endfor %}

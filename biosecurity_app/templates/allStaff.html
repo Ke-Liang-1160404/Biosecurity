@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<H1 class="bg-warning">All the Apiarists</H1>
+<H1 class="bg-warning">All the Staff</H1>
 <div class="table-responsive">
   <table class="table table-striped table-bordered table-hover">
     <thead class="table-dark">
@@ -26,14 +26,25 @@
       {% for staff in allStaff %}
       <tr>
         {% for field in staff %}
+        {% if loop.index == 11 %} <!-- Check if the index is for the status -->
         <td>
-        
-
-          <a href="{{url_for('admin_single_staff', id=staff[0])}}" class="text-decoration-none text-dark">
-            {{field}}
+          {% if field == 1 %}
+          <a href="{{ url_for('admin_single_staff', id=staff[0]) }}" class="text-decoration-none text-dark">
+            Activated
           </a>
-
+          {% elif field == 0 %}
+          <a href="{{ url_for('admin_single_staff', id=staff[0]) }}" class="text-decoration-none text-dark">
+            Deactivated
+          </a>
+          {% endif %}
         </td>
+        {% else %}
+        <td>
+          <a href="{{ url_for('admin_single_staff', id=staff[0]) }}" class="text-decoration-none text-dark">
+            {{ field }}
+          </a>
+        </td>
+        {% endif %}
         {% endfor %}
       </tr>
       {% endfor %}
