@@ -69,7 +69,7 @@ def admineditapiarist():
 @app.route("/admin/staff")
 def adminStaff():
         connection=getCursor()
-        connection.execute("SELECT staff_id,username,first_name,last_name,email,work_phone_number, address,hire_date,position,department,status from staff_admin where position='staff';")
+        connection.execute("SELECT staff_id,username,first_name,last_name,email,work_phone_number, address,hire_date,position,department,status from staff_admin where position !='admin';")
         allStaff=connection.fetchall()
         if "admin" in session:
           admin = session["admin"]  
@@ -83,11 +83,10 @@ def admin_single_staff(id):
      connection = getCursor()
      connection.execute("SELECT * FROM staff_admin WHERE staff_id = %s;", (id,))
      staff = connection.fetchone()
-
-
+     print(staff)
      if "admin" in session:
         admin = session["admin"]
-        return render_template("allStaff.html", staff=staff, admin=admin)
+        return render_template("staff.html", staff=staff, admin=admin)
      else:
         return redirect(url_for("login"))
      
@@ -99,9 +98,12 @@ def admin_edit_staff():
       phone=request.form.get("phone")
       email=request.form.get("email")
       status=request.form.get("status")
+      position=request.form.get("position")
+      department=request.form.get("department")
+
       id=request.form.get("id")
       print(address,phone,email,status,email)
       connection=getCursor()
-      sql="""UPDATE apiarists SET address=%s,phone=%s,email=%s,status=%s where apiarists_id=%s;"""
-      connection.execute(sql,(address,phone,email,status,id,))
-  return redirect(url_for('adminApiarists'))
+      sql="""UPDATE staff_admin SET address=%s,work_phone_number=%s,email=%s,position=%s,department=%s,status=%s where staff_id=%s;"""
+      connection.execute(sql,(address,phone,email,position,department,status,id,))
+  return redirect(url_for('adminStaff'))
