@@ -33,7 +33,7 @@ def admin_profile():
 def admin():
     if "admin" in session:
         admin = session["admin"]  
-        return render_template("admin.html", admin=admin)
+        return render_template("managingUser.html", admin=admin)
 
     else:
        
@@ -66,4 +66,44 @@ def admineditapiarist():
   return redirect(url_for('adminApiarists'))
 
 
-    
+@app.route("/admin/staff")
+def adminStaff():
+        connection=getCursor()
+        connection.execute("SELECT staff_id,username,first_name,last_name,email,work_phone_number, address,hire_date,position,department,status from staff_admin where position !='admin';")
+        allStaff=connection.fetchall()
+        if "admin" in session:
+          admin = session["admin"]  
+          return render_template("allStaff.html", allStaff=allStaff, admin=admin)
+        else:
+       
+          return redirect(url_for("login"))
+        
+@app.route("/admin/staff/<id>")
+def admin_single_staff(id):
+     connection = getCursor()
+     connection.execute("SELECT * FROM staff_admin WHERE staff_id = %s;", (id,))
+     staff = connection.fetchone()
+     print(staff)
+     if "admin" in session:
+        admin = session["admin"]
+        return render_template("staff.html", staff=staff, admin=admin)
+     else:
+        return redirect(url_for("login"))
+     
+
+@app.route("/admin/staff/edit", methods=["POST"])
+def admin_edit_staff():
+  if request.method == "POST":
+      address=request.form.get("address")
+      phone=request.form.get("phone")
+      email=request.form.get("email")
+      status=request.form.get("status")
+      position=request.form.get("position")
+      department=request.form.get("department")
+
+      id=request.form.get("id")
+      print(address,phone,email,status,email)
+      connection=getCursor()
+      sql="""UPDATE staff_admin SET address=%s,work_phone_number=%s,email=%s,position=%s,department=%s,status=%s where staff_id=%s;"""
+      connection.execute(sql,(address,phone,email,position,department,status,id,))
+  return redirect(url_for('adminStaff'))

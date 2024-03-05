@@ -17,23 +17,22 @@
         <th>Phone</th>
         <th>Address</th>
         <th>Date Joined</th>
+        <th>Position</th>
+        <th>Department</th>
         <th>Active Status</th>
       </tr>
     </thead>
     <tbody>
-      {% for user in allApiarists %}
+      {% for staff in allStaff %}
       <tr>
-        {% for field in user %}
+        {% for field in staff %}
         <td>
-          {% if 'staff' in session %}
-          <a href="{{url_for('staff_single_apiarist', id=user[0])}}" class="text-decoration-none text-dark">
+        
+
+          <a href="{{url_for('admin_single_staff', id=staff[0])}}" class="text-decoration-none text-dark">
             {{field}}
           </a>
-          {% elif 'admin' in session %}
-          <a href="{{url_for('admin_single_apiarist', id=user[0])}}" class="text-decoration-none text-dark">
-            {{field}}
-          </a>
-          {% endif %}
+
         </td>
         {% endfor %}
       </tr>
