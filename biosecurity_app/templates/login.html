@@ -6,7 +6,7 @@
   <form action="{{ url_for('login') }}" method="POST" autocomplete="off" class="bg-warning p-4 rounded">
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
-      <input type="text" class="form-control" id="username" name="username" required>
+      <input type="text" class="form-control" id="username" name="username" value="{% if registered %}{{username}}{% endif %}" required>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
@@ -16,10 +16,17 @@
 
 
 
-    {% if msg %}
+    {% if toLogin and not registered %}
     <div class="alert alert-danger"   role="alert">
+     this is  {{registered}}
     {{ msg }}
     </div>
+    {% elif registered %}
+    <div class="alert alert-success"   role="alert">
+      <p>
+          Account username:{{username}} registered successfully
+      </p> 
+      </div>
     {% endif %}
 
     <button type="submit" class="btn btn-dark">Submit</button>
