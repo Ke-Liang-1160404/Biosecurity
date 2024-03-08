@@ -34,12 +34,12 @@
     </div>
    
     {% if msg %}
-    <div class="alert {% if not registered %}alert-danger{% endif %}  {% if registered %}alert-success{% endif %}"   role="alert">
+    <div class="alert alert-danger"   role="alert">
     {{ msg }}
 
     {% endif %}
     
-    {% if login %}
+    {% if toLogin and not registered %}
     <div class="alert alert-danger" role="alert">
      <p>
        Email has been used to register an account, Please try <a href='/login' class="alert-link">login</a> or use another email.
