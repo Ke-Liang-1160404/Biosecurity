@@ -138,7 +138,7 @@ def login():
           #---------query the staff from database-----------#
 
 
-          connection.execute("select username,password,position from staff_admin where username=%s and password=%s and position='staff';",(username,hashed,))
+          connection.execute("select username,password,position from staff_admin where username=%s and password=%s and position != 'admin';",(username,hashed,))
           staff=connection.fetchone()
           print(staff)
           print(username)
