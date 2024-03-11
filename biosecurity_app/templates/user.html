@@ -3,12 +3,22 @@
 {% block title %}Staff Page{% endblock %}
 
 {% block content %}
+<div class="d-flex justify-content-center align-items-center">
 
+  {% if 'staff' in session or 'admin' in session %}
+  <h1>Edit User</h1>
+  {% elif 'user' in session %}
+  <h1>Manage My Profile</h1>
+  {% endif %}
+</div>
 
-<h1>Edit User</h1>
-{% if 'staff' in session %} /staff/editapiarist  {% elif 'admin' in session %} /admin/editapiarist    {% endif %}
-
-<form action="{% if 'staff' in session %} /staff/apiarists/edit  {% elif 'admin' in session %} /admin/apiarists/edit    {% endif %}" method="POST" class="bg-warning  p-4 rounded">
+<form action="{% if 'staff' in session %}
+                  /staff/apiarists/edit
+                {% elif 'admin' in session %}
+                  /admin/apiarists/edit
+                {% elif 'user' in session %}
+                  /user/profile/edit
+                {% endif %}" method="POST" class="bg-warning p-4 rounded">
   <div class="mx-auto p-2  form-floating form-group ">
     <input type="text" class="form-control" id="id" name="id"  value="{{apiarist[0]}}" hidden readonly>
     <label for="id" class="form-label" hidden >ID</label>
@@ -48,6 +58,7 @@
     <input type="text" class="form-control" id="date" name="date"  value="{{apiarist[8]}}" readonly>
     <label for="date" class="form-label" >Member Since</label>
   </div>
+  {% if 'staff' in session or 'admin' in session %}
   <div class="mx-auto p-2 form-floating form-group">
     <select class="form-select my-auto" id="status" name="status" required>
       {% if apiarist[9] == 1  %}
@@ -64,7 +75,29 @@
     </select>
     <label for="status" class="form-label">Active Status</label>
   </div>
-  <button type="submit" class="btn btn-dark">Submit</button>
+  {% elif 'user' in session %}
+  <div class="col-md-6">
+   <a href="{{url_for('password')}}" class="btn btn-dark btn-lg me-2">Changing Password</a>
+
+  </div>
+    {% if password_reset %}
+     <div class="alert alert-success"   role="alert">
+      <p>
+        {{msg}}
+      </p> 
+     </div>
+    {% endif %}
+
+  {% endif %}
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+    </div>
+    <div class="col-md-6 text-end">
+      <button type="submit" class="btn btn-dark">Submit</button>
+    </div>
+  </div>
+
 
 </form>
 

@@ -11,7 +11,7 @@ import re
 hashing = Hashing(app)
 app.secret_key = 'hello'
 app.url_map.strict_slashes = False 
-app.permanent_session_lifetime=timedelta(minutes =5)
+app.permanent_session_lifetime=timedelta(hours =5)
 dbconn = None
 connection = None
 
@@ -26,6 +26,14 @@ def getCursor():
     database=connect.dbname, autocommit=True)
     dbconn = connection.cursor()
     return dbconn
+
+## Password Check###
+def check_password(password):
+         msg=""
+         pattern = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
+         if not re.match(pattern ,password):
+            msg="Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character, and should be at least 8 characters long."
+ 
 
 # check which role is in session
 def redirect_based_on_role(html_file):
@@ -81,7 +89,8 @@ def register():
          phone=request.form.get('phone')
          date=datetime.today().strftime("%Y-%m-%d")
          #hashing the password to hashed password
-         hashed=hashing.hash_value(password, salt=b"abcd")
+         hashed=hashing.hash_value(password, salt="abcd")
+         print(hashed)
          #query the input and compare the input user and email with existed user and email address to check if they are already in the database
          connection=getCursor()
          connection.execute("Select * from apiarists WHERE username= %s ", (username, ))
@@ -89,10 +98,10 @@ def register():
          connection.execute("Select * from apiarists WHERE email= %s", (email,))
          email_repeat=connection.fetchone()
          #using regular expression to validate password to have Upper case, lover case, number, special sign and at least 8 characters within it
-         pattern = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
          toLogin=False
          registered=False
-      #haddle different validations and set the  message to prompt related information
+         #haddle different validations and set the  message to prompt related information
+         pattern = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
          if not re.match(pattern ,password):
           msg="Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character, and should be at least 8 characters long."
          elif user:
@@ -140,9 +149,7 @@ def login():
 
           connection.execute("select username,password,position from staff_admin where username=%s and password=%s and position != 'admin';",(username,hashed,))
           staff=connection.fetchone()
-          print(staff)
-          print(username)
-          print(hashed)
+         
 
           #---------query the admin from database-----------#
 
