@@ -61,12 +61,13 @@ def staff():
     
 @app.route("/staff/apiarists")
 def staffApiarists():
-    
+    updadted=False
+    msg=""
     if "staff" in session:
         staff = session["staff"]
         all_apiarists = getAllApiarists()
 
-        return render_template("allUser.html", allApiarists=all_apiarists, staff=staff)
+        return render_template("allUser.html", allApiarists=all_apiarists, staff=staff,msg=msg,updadted=updadted )
     else:
         return redirect(url_for("login"))
  

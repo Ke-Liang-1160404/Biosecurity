@@ -50,6 +50,15 @@
       {% endfor %}
     </tbody>
   </table>
+  {% if updaded %}
+
+  <div class="alert alert-success"   role="alert">
+    <p>
+      {{msg}}
+    </p> 
+   </div>
+  {% endif%}
+
 </div>
 
 {% endblock %}

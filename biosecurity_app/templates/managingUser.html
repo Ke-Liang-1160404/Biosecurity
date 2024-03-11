@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Staff Page{% endblock %}
+{% block title %}home Page{% endblock %}
 
 {% block content %}
 
@@ -9,13 +9,19 @@
     <div class="col-md-6">
       <h1 class="text-center">{{staff}}</h1>
       <div class="text-center my-4">
+
         {% if "staff" in session %}
 
         <a href="{{url_for('staffApiarists')}}" class="btn btn-warning btn-lg me-2">Manage Apiarists</a>
+        {% elif "user" in session %}
+        <a href="{{url_for('self_managing')}}" class="btn btn-warning btn-lg me-2">Manage Your Account</a>
 
         {% elif "admin" in session %}
-        <a href="{{url_for('adminApiarists')}}" class="btn btn-warning btn-lg me-2">Manage Apiarists</a>
-        <a href="{{url_for('adminStaff')}}" class="btn btn-warning btn-lg">Manage Staff</a>
+        <div class="p-2">
+
+          <a href="{{url_for('adminApiarists')}}" class="btn btn-warning btn-lg me-2">Manage Apiarists</a>
+          <a href="{{url_for('adminStaff')}}" class="btn btn-warning btn-lg">Manage Staff</a>
+        </div>
         {% endif %}
       </div>
     </div>
