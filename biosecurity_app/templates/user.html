@@ -76,6 +76,10 @@
     <label for="status" class="form-label">Active Status</label>
   </div>
   {% elif 'user' in session %}
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="status" name="status"  value="{{apiarist[9]}}" hidden readonly>
+
+  </div>
   <div class="col-md-6">
    <a href="{{url_for('password')}}" class="btn btn-dark btn-lg me-2">Changing Password</a>
 

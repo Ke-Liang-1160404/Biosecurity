@@ -93,6 +93,8 @@ def admin_single_staff(id):
 
 @app.route("/admin/staff/edit", methods=["POST"])
 def admin_edit_staff():
+ if "admin" in session:
+  admin = session["admin"]
   if request.method == "POST":
       address=request.form.get("address")
       phone=request.form.get("phone")
@@ -106,4 +108,4 @@ def admin_edit_staff():
       connection=getCursor()
       sql="""UPDATE staff_admin SET address=%s,work_phone_number=%s,email=%s,position=%s,department=%s,status=%s where staff_id=%s;"""
       connection.execute(sql,(address,phone,email,position,department,status,id,))
-  return redirect(url_for('adminStaff'))
+  return redirect(url_for('adminStaff', admin=admin))

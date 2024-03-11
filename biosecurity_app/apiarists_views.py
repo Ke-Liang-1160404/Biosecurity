@@ -67,7 +67,9 @@ def edit_profile():
   if "user" in session:
         user = session["user"] 
   edit_apiarist()
-  return redirect(url_for('staffApiarists',user=user))
+  msg="Information Updated"
+  updated=True
+  return redirect(url_for('staffApiarists',user=user,msg=msg, updated=updated))
 
 
 @app.route("/user/profile/password")
@@ -84,6 +86,7 @@ def edit_password():
    if request.method =='POST':
 
      getUser()
+     print(getUser())
      oldPassword=request.form.get("old_password")
      newPassword=request.form.get("new_password")
      reNewPassword=request.form.get("re_new_password")
@@ -93,8 +96,7 @@ def edit_password():
      connection=getCursor()
      connection.execute("SELECT password from apiarists where username=%s;", (username,))
      password=connection.fetchone()
-     print ("hashed", hashed_old)
-     print ("password", password[0])
+     
      password_reset=False
      alert=False
      if hashed_old == password[0]:
@@ -102,7 +104,7 @@ def edit_password():
 
             pattern = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
             if not re.match(pattern ,newPassword):
-                   print("Password validate")
+
                    alert=True
                    msg="Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character, and should be at least 8 characters long."
                    return render_template("password.html", msg=msg, user=user, alert=alert)
@@ -114,12 +116,12 @@ def edit_password():
 
          else:
              msg ="Please confrim your re-typed password match the new password"
-             print("new password dont match")
+
              alert=True
              return render_template("password.html", msg=msg, user=username, alert=alert)
      else:
          msg="Your password input was not correct, please try again"
-         print("old password incorrect")
+
          alert=True
          return render_template("password.html", msg=msg,user=username, alert=alert)
     
