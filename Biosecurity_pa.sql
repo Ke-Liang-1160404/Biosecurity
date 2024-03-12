@@ -75,17 +75,16 @@ VALUES
 
 INSERT INTO pest_disease (item_type, presence, common_name, scientific_name, key_characteristics, biology_description, symptoms, primary_image)
 VALUES
-
-('pest', '1', 'Varroa mite', 'Varroa destructor', 'External parasite of adult bees and brood', 'Varroa mites reproduce in honeybee colonies', 'Deformed wings, reduced lifespan of bees',2),
+('pest', '1', 'Varroa mite', 'Varroa destructor', 'External parasite of adult bees and brood', 'Varroa mites reproduce in honeybee colonies', 'Deformed wings, reduced lifespan of bees',1),
 ('pest', '1', 'Small Hive Beetle', 'Aethina tumida', 'Small dark beetle', 'Larvae damage combs and honey', 'Slimy comb and honey',2),
-('disease', '1', 'American Foulbrood', 'Paenibacillus larvae', 'Bacterial infection', 'Spores spread through contaminated equipment', 'Discolored larvae',2),
-('disease', '1', 'Nosema', 'Nosema apis', 'Microsporidian parasite', 'Infects the gut of bees', 'Dysentery',2),
-('pest', '1', 'European Foulbrood', 'Melissococcus plutonius', 'Bacterial infection', 'Affects bee larvae', 'Ropey texture in larvae',2),
-('pest', '0', 'Tropilaelaps mite', 'Tropilaelaps spp.', 'Parasitic mites', 'Attacks brood cells and adults', 'Deformed wings, reduced lifespan of bees',2),
-('pest', '0', 'Asian Hornet', 'Vespa velutina', 'Large hornet species', 'Preys on honeybees', 'Attack honeybee hives',2),
-('disease', '0', 'Chalkbrood', 'Ascosphaera apis', 'Fungal infection', 'Affects bee larvae', 'White mummified larvae',2),
-('pest', '0', 'Wax Moth', 'Galleria mellonella', 'Moth larvae', 'Destroys comb and honey', 'Webbing and cocoons in hive',2),
-('disease', '0', 'Sacbrood Virus', 'Sacbrood virus', 'Viral infection', 'Affects bee larvae', 'Dead larvae with sac-like appearance', 2);
+('disease', '1', 'American Foulbrood', 'Paenibacillus larvae', 'Bacterial infection', 'Spores spread through contaminated equipment', 'Discolored larvae',3),
+('disease', '1', 'Nosema', 'Nosema apis', 'Microsporidian parasite', 'Infects the gut of bees', 'Dysentery',4),
+('pest', '1', 'European Foulbrood', 'Melissococcus plutonius', 'Bacterial infection', 'Affects bee larvae', 'Ropey texture in larvae',5),
+('pest', '0', 'Tropilaelaps mite', 'Tropilaelaps spp.', 'Parasitic mites', 'Attacks brood cells and adults', 'Deformed wings, reduced lifespan of bees',6),
+('pest', '0', 'Asian Hornet', 'Vespa velutina', 'Large hornet species', 'Preys on honeybees', 'Attack honeybee hives',7),
+('disease', '0', 'Chalkbrood', 'Ascosphaera apis', 'Fungal infection', 'Affects bee larvae', 'White mummified larvae',8),
+('pest', '0', 'Wax Moth', 'Galleria mellonella', 'Moth larvae', 'Destroys comb and honey', 'Webbing and cocoons in hive',9),
+('disease', '0', 'Sacbrood Virus', 'Sacbrood virus', 'Viral infection', 'Affects bee larvae', 'Dead larvae with sac-like appearance', 10); 
 
 
 INSERT INTO images (image_id, pest_id, image_url) VALUES
