@@ -47,15 +47,15 @@ CREATE TABLE IF NOT EXISTS `pest_disease`
 );
 
 
-CREATE TABLE IF NOT EXISTS `image` (
-  `imageID` INT NOT NULL,
-  `pestID` INT NOT NULL,
-  `imageURL` VARCHAR(100) NULL,
-  UNIQUE INDEX `imageID_UNIQUE` (`imageID` ASC) VISIBLE,
-  INDEX `id_idx` (`pestID` ASC) VISIBLE,
+CREATE TABLE IF NOT EXISTS `images` (
+  `image_id` INT NOT NULL,
+  `pest_id` INT NOT NULL,
+  `image_url` VARCHAR(100) NULL,
+  UNIQUE INDEX `image_id_UNIQUE` (`image_id` ASC) VISIBLE,
+  INDEX `id_idx` (`pest_id` ASC) VISIBLE,
   CONSTRAINT `id`
-    FOREIGN KEY (`pestID`)
-    REFERENCES `biosecurity`.`pest_disease` (`id`)
+    FOREIGN KEY (`pest_id`)
+    REFERENCES `pest_disease` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
@@ -80,6 +80,19 @@ VALUES
 
 INSERT INTO pest_disease (item_type, presence, common_name, scientific_name, key_characteristics, biology_description, symptoms, primary_image)
 VALUES
-('pest', 1, 'Varroa mite', 'Varroa destructor', 'External parasite', 'Varroa mites reproduce in brood cells and feed on both adult and larval bees.', 'Deformed wings, crawling bees, weakened colonies', 'varroa_mite.jpg'),
-('pest', 1, 'Small hive beetle', 'Aethina tumida', 'Small beetle, larvae feed on hive contents', 'Small hive beetles can cause fermentation of honey, making it unpalatable for bees.', 'Slimy honey, beetles in the hive', 'small_hive_beetle.jpg'),
-('disease', 1, 'American foulbrood', 'Paenibacillus larvae', 'Bacterial infection', 'Spores spread by infected bees and equipment.', 'Sunken, greasy-looking brood cappings', 'american_foulbrood.jpg');
+('pest', '1', 'Varroa mite', 'Varroa destructor', 'External parasite of adult bees and brood', 'Varroa mites reproduce in honeybee colonies', 'Deformed wings, reduced lifespan of bees',2),
+('pest', '1', 'Small Hive Beetle', 'Aethina tumida', 'Small dark beetle', 'Larvae damage combs and honey', 'Slimy comb and honey',2),
+('disease', '1', 'American Foulbrood', 'Paenibacillus larvae', 'Bacterial infection', 'Spores spread through contaminated equipment', 'Discolored larvae',2),
+('disease', '1', 'Nosema', 'Nosema apis', 'Microsporidian parasite', 'Infects the gut of bees', 'Dysentery',2),
+('pest', '1', 'European Foulbrood', 'Melissococcus plutonius', 'Bacterial infection', 'Affects bee larvae', 'Ropey texture in larvae',2),
+('pest', '0', 'Tropilaelaps mite', 'Tropilaelaps spp.', 'Parasitic mites', 'Attacks brood cells and adults', 'Deformed wings, reduced lifespan of bees',2),
+('pest', '0', 'Asian Hornet', 'Vespa velutina', 'Large hornet species', 'Preys on honeybees', 'Attack honeybee hives',2),
+('disease', '0', 'Chalkbrood', 'Ascosphaera apis', 'Fungal infection', 'Affects bee larvae', 'White mummified larvae',2),
+('pest', '0', 'Wax Moth', 'Galleria mellonella', 'Moth larvae', 'Destroys comb and honey', 'Webbing and cocoons in hive',2),
+('disease', '0', 'Sacbrood Virus', 'Sacbrood virus', 'Viral infection', 'Affects bee larvae', 'Dead larvae with sac-like appearance', 2); 
+
+INSERT INTO images (image_id, pest_id, image_url) VALUES
+(1, 1, 'images/varroa-mite.jpg'),
+(2, 1, 'images/varroa-mite-1.jpg'),
+(3, 8, 'images/chalkbrood.jpg'),
+(4, 8, 'images/chalkbrood-1.jpg');

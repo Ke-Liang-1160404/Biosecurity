@@ -9,6 +9,8 @@ import re
 from biosecurity_app.views import getAllApiarists,getCursor
 
 
+
+
 hashing = Hashing(app)
 app.secret_key = 'hello'
 app.url_map.strict_slashes = False 
@@ -24,6 +26,12 @@ def get_single_apiarist(id):
     apiarist = connection.fetchone()
     return apiarist
 
+def get_single_pest(id):
+    connection = getCursor()
+    connection.execute("SELECT * FROM pest_disease WHERE apiarists_id = %s;", (id,))
+    pest = connection.fetchone()
+    return pest
+
 def edit_apiarist():
    if request.method == "POST":
       address=request.form.get("address")
@@ -36,7 +44,11 @@ def edit_apiarist():
       sql="""UPDATE apiarists SET address=%s,phone=%s,email=%s,status=%s where apiarists_id=%s;"""
       connection.execute(sql,(address,phone,email,status,id,))
      
-   
+def all_pest():
+        connection=getCursor()
+        connection.execute("select * from pest_disease left join images on primary_image = image_id;")
+        all_pest=connection.fetchall()
+        return all_pest
 
 @app.route("/staff/dashboard")
 def staff_dashboard ():
@@ -89,3 +101,22 @@ def staffeditapiarist():
 
     
 
+@app.route("/staff/guide")
+def guide_staff():
+  if "staff" in session:
+        staff = session["staff"] 
+        all_pest()
+
+       
+  return render_template("guide.html", staff=staff, all_pest=all_pest())
+
+
+@app.route("/staff/guide/<id>")
+def staff_pest():
+  get_single_pest()
+  if "staff" in session:
+        staff = session["staff"] 
+        all_pest()
+        return render_template("pest.html", pest=get_single_pest(), staff=staff)
+  else:
+        return redirect(url_for("login"))

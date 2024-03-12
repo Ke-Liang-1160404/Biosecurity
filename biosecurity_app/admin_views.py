@@ -8,6 +8,8 @@ from datetime import datetime
 import re
 from biosecurity_app.views import getAllApiarists,getCursor
 from biosecurity_app.staff_views import get_single_apiarist,edit_apiarist
+from biosecurity_app.apiarists_views import all_pest
+
 
 
 
@@ -109,3 +111,13 @@ def admin_edit_staff():
       sql="""UPDATE staff_admin SET address=%s,work_phone_number=%s,email=%s,position=%s,department=%s,status=%s where staff_id=%s;"""
       connection.execute(sql,(address,phone,email,position,department,status,id,))
   return redirect(url_for('adminStaff', admin=admin))
+ 
+
+@app.route("/admin/guide")
+def guide_admin():
+  if "admin" in session:
+        admin = session["admin"] 
+        all_pest()
+  return render_template("guide.html", admin=admin, all_pest=all_pest())
+
+
