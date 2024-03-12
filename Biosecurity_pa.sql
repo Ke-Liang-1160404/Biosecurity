@@ -90,6 +90,12 @@ VALUES
 
 INSERT INTO images (image_id, pest_id, image_url) VALUES
 (1, 1, 'images/varroa-mite.jpg'),
-(2, 1, 'images/varroa-mite-1.jpg'),
-(3, 3, 'images/chalkbrood.jpg'),
-(4, 3, 'images/chalkbrood-1.jpg');
+(2, 2, 'images/small-hive-bettle.jpg'),
+(3, 3, 'images/American-Foulbrood.jpg'),
+(4, 4, 'images/Nosema.jpg'),
+(5, 5, 'images/European-Foulbrood.jpg'),
+(6, 6, 'images/Tropilaelaps-mite.jpg'),
+(7, 7, 'images/Asian-Hornet.jpg'),
+(8, 8, 'images/Chalkbrood.jpg'),
+(9, 9, 'images/Wax-Moth.jpg'),
+(10, 10, 'images/Sacbrood-Virus.jpg');
