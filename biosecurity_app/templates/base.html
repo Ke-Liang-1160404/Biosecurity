@@ -79,9 +79,9 @@
         <div class="ml-auto">
           {% if session['user'] or session['staff'] or session['admin'] %}
               {% if session['admin'] %}
-                  <p class="navbar-text">Hello,  <Strong> {{ admin }} </Strong>! <br> You are already logged in as Admin</p>
+                  <p class="navbar-text">Hello,  <Strong> {{ admin }} {{ user }}</Strong>! <br> You are already logged in as Admin</p>
               {% elif session['staff'] %}
-                  <p class="navbar-text">Hello,  <Strong> {{ staff }}</Strong>! <br>You are already logged in as Staff</p>
+                  <p class="navbar-text">Hello,  <Strong> {{ staff }} {{ user }}</Strong>! <br>You are already logged in as Staff</p>
               {% else %}
                   <p class="navbar-text">Hello, User <Strong> {{ user }}</Strong>! <br>You are already logged in as an apiarists</p>
               {% endif %}

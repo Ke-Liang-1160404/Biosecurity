@@ -3,16 +3,34 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center bg-warning py-5">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4">Welcome to the Biosecurity</h1>
+            <p class="lead">Discover the Buzzing World of Bees</p>
+        </div>
+    </div>
 
+    <div class="row justify-content-center bg-light py-5">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4">The Importance of Bees</h2>
+            <p class="lead">Bees are vital to our ecosystem and economy. They play a crucial role in pollination, agriculture, and honey production.</p>
+            <p class="lead">Without bees, our food supply and environment would suffer.</p>
+        </div>
+    </div>
 
-
-<h1>Home</h1>
-
-{{staff}}
-<a href="/admin/dashboard">admin</a>
-<a href="/staff/dashboard">staff</a>
-<a href="/apiarists/dashboard">apiarists</a>
-<div class="flash">Flash message</div>
-
+    <div class="row justify-content-center bg-warning py-2">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4">Protecting the Hive</h2>
+            <p class="lead">We must safeguard our bees from pests and diseases to ensure their health and survival.</p>
+            <p class="lead">Together, we can protect the precious pollinators that sustain our world.</p>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3 p-10">
+      <div class="col-md-8 text-center mb-4">
+          <a href="{{url_for('reference')}}" class="btn btn-dark text-warning btn-lg">References</a>
+      </div>
+    </div>
+</div>
 
 {% endblock %}

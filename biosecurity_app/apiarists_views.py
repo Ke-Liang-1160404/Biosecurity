@@ -6,8 +6,8 @@ import connect
 from flask_hashing import Hashing
 from datetime import datetime
 import re
-from biosecurity_app.staff_views import edit_apiarist
-from biosecurity_app.views import check_password
+from biosecurity_app.staff_views import edit_apiarist,all_pest
+
 
 
 
@@ -16,6 +16,8 @@ app.secret_key = 'hello'
 app.url_map.strict_slashes = False 
 dbconn = None
 connection = None
+
+
 
 def getCursor():
     global dbconn
@@ -129,3 +131,14 @@ def edit_password():
 
   else:
         return redirect(url_for("login"))
+  
+@app.route("/user/guide")
+def guide_apiarist():
+  if "user" in session:
+        user = session["user"] 
+        all_pest()
+  
+  return render_template("guide.html", user=user, all_pest=all_pest())
+  
+
+

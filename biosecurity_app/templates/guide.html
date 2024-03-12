@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Pest and Disease Information{% endblock %}
+
+{% block content %}
+
+<H1 class="bg-warning">Pest and Disease Information</H1>
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>Item Type</th>
+        <th>Presence</th>
+        <th>Common Name</th>
+        <th>Scientific Name</th>
+        <th>Key Characteristics</th>
+        <th>Biology Description</th>
+        <th>Symptoms</th>
+        <th>Primary Image</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for item in all_pest %}
+      
+      <tr>
+        <td>{{ item[1] }}</td>
+        <td>
+          {% if item[2] == 1 %}
+          Native
+          {% else %}
+          Non-Native
+          {% endif %}
+        </td>
+        <td>{{ item[3] }}</td>
+        <td>{{ item[4] }}</td>
+        <td>{{ item[5] }}</td>
+        <td>{{ item[6] }}</td>
+        <td>{{ item[7] }}</td>
+        <td>
+            <img src="/static/{{item[11]}}" alt="/static/{{item[11]}}">
+        </td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
