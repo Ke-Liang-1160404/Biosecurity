@@ -7,7 +7,7 @@ from flask_hashing import Hashing
 from datetime import datetime
 import re
 from biosecurity_app.views import getAllApiarists,getCursor
-from biosecurity_app.staff_views import get_single_apiarist,edit_apiarist
+from biosecurity_app.staff_views import get_single_apiarist,edit_apiarist,getStaff
 from biosecurity_app.apiarists_views import all_pest
 
 
@@ -22,13 +22,6 @@ connection = None
 
 
 
-@app.route("/admin/dashboard")
-def admin_dashboard ():
-      return "Hello Admin"
-
-@app.route("/admin/profile")
-def admin_profile():
-      return "<h1>Admin Profile</h1>"
 
 
 @app.route("/admin")
@@ -123,3 +116,12 @@ def guide_admin():
   else:
         return redirect(url_for("login"))
 
+
+@app.route("/admin/profile")
+def admin_self_managing():
+    
+    if "admin" in session:
+        admin = session["admin"]  
+        return render_template("profile.html",role=getStaff("admin"),admin=admin)
+    else:
+        return redirect(url_for("login"))

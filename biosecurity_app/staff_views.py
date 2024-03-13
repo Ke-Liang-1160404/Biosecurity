@@ -50,17 +50,15 @@ def all_pest():
         all_pest=connection.fetchall()
         return all_pest
 
-@app.route("/staff/dashboard")
-def staff_dashboard ():
-      return "Hello Staff"
+def getStaff(role):
+    username = session[role]
+    print(username)
+    connection=getCursor()
+    connection.execute("Select * from staff_admin where username=%s",(username,))
+    staff_admin=connection.fetchone()
+    return staff_admin
 
-@app.route("/staff/profile")
-def staff_profile():
-        connection = getCursor()
-        connection.execute('select * from staff_admin;')
-        staff=connection.fetchall()
-        print(staff)
-        return render_template('home.html',staff=staff) 
+
 
 @app.route("/staff")
 def staff():
@@ -119,4 +117,14 @@ def staff_pest():
         all_pest()
         return render_template("pest.html", pest=get_single_pest(), staff=staff)
   else:
+        return redirect(url_for("login"))
+  
+
+@app.route("/staff/profile")
+def staff_self_managing():
+    
+    if "staff" in session:
+        staff = session["staff"]  
+        return render_template("profile.html",role=getStaff("staff"),staff=staff)
+    else:
         return redirect(url_for("login"))

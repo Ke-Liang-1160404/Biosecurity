@@ -1,0 +1,107 @@
+{% extends 'managingUser.html' %}
+
+{% block title %}Staff Page{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center">
+
+
+  <h1>Manage My Profile</h1>
+
+</div>
+
+<form action="{% if 'staff' in session %}
+                  /staff/profile
+                {% elif 'admin' in session %}
+                  /admin/profile
+                {% elif 'user' in session %}
+                  /user/profile
+                {% endif %}" method="POST" class="bg-warning p-4 rounded">
+  <div class="mx-auto p-2  form-floating form-group ">
+    <input type="text" class="form-control" id="id" name="id"  value="{{role[0]}}" hidden readonly>
+    <label for="id" class="form-label" hidden >ID</label>
+  </div>
+  <div class="mx-auto p-2  form-floating form-group ">
+    <input type="text" class="form-control" id="fname" name="fname"  value="{{role[1]}}" readonly>
+    <label for="fname" class="form-label" >First Name</label>
+  </div>
+
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="lname" name="lname"  value="{{role[2]}}" readonly>
+    <label for="lname" class="form-label" >Last Nanme</label>
+  </div>
+
+  
+
+  {% if "staff" in session or "admin" in session%}
+    <div class="mx-auto p-2  form-floating form-group">
+      <input type="text" class="form-control" id="username" name="username"  value="{{role[4]}}" readonly>
+      <label for="username" class="form-label" >User Name</label>
+    </div>
+
+    <div class="mx-auto p-2  form-floating form-group">
+
+    <input type="text" class="form-control" id="email" name="email"  value="{{role[3]}}" required>
+    <label for="email" class="form-label" >Email</label>
+  </div>
+
+  {% else %}
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="username" name="username"  value="{{role[3]}}" readonly>
+    <label for="username" class="form-label" >User Name</label>
+  </div>
+  <div class="mx-auto p-2  form-floating form-group">
+  
+    <input type="text" class="form-control" id="email" name="email"  value="{{role[5]}}" required>
+    <label for="email" class="form-label" >Email</label>
+  </div>
+  {% endif %}
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="address" name="address"  value="{{role[6]}}" required>
+    <label for="address" class="form-label" >address</label> 
+  </div>
+
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="phone" name="phone"  value="{{role[7]}}" required>
+    <label for="phone" class="form-label" >Phone</label>
+  </div>
+
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="date" name="date"  value="{{role[8]}}" readonly>
+    <label for="date" class="form-label" >Member Since</label>
+  </div>
+  
+
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="status" name="status"  value="{{role[9]}}" hidden readonly>
+
+  </div>
+  <div class="col-md-6">
+   <a href="{{url_for('password')}}" class="btn btn-dark btn-lg me-2">Changing Password</a>
+
+  </div>
+    {% if password_reset %}
+     <div class="alert alert-success"   role="alert">
+      <p>
+        {{msg}}
+      </p> 
+     </div>
+    {% endif %}
+
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+    </div>
+    <div class="col-md-6 text-end">
+      <button type="submit" class="btn btn-dark">Submit</button>
+    </div>
+  </div>
+
+
+</form>
+
+
+
+
+{% endblock %}

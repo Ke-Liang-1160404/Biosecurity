@@ -16,11 +16,13 @@
         <a href="{{url_for('guide_staff')}}" class="btn btn-warning btn-lg me-2">Guide</a>
 
         <a href="{{url_for('staffApiarists')}}" class="btn btn-warning btn-lg me-2">Manage Apiarists</a>
+        <a href="{{url_for('staff_self_managing')}}" class="btn btn-warning btn-lg me-2">Manage Your Account</a>
+
 
         {% elif "user" in session %}
         <a href="{{url_for('guide_apiarist')}}" class="btn btn-warning btn-lg me-2">Guide</a>
 
-        <a href="{{url_for('self_managing')}}" class="btn btn-warning btn-lg me-2">Manage Your Account</a>
+        <a href="{{url_for('user_self_managing')}}" class="btn btn-warning btn-lg me-2">Manage Your Account</a>
 
         {% elif "admin" in session %}
         <div class="p-2">
@@ -28,6 +30,8 @@
 
           <a href="{{url_for('adminApiarists')}}" class="btn btn-warning btn-lg me-2">Manage Apiarists</a>
           <a href="{{url_for('adminStaff')}}" class="btn btn-warning btn-lg">Manage Staff</a>
+        <a href="{{url_for('admin_self_managing')}}" class="btn btn-warning btn-lg me-2">Manage Your Account</a>
+
         </div>
         {% endif %}
       </div>

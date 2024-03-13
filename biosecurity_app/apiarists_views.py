@@ -17,7 +17,13 @@ app.url_map.strict_slashes = False
 dbconn = None
 connection = None
 
-
+def getUser():
+    username = session["user"]
+    print(username)
+    connection=getCursor()
+    connection.execute("Select * from apiarists where username=%s",(username,))
+    apiarist=connection.fetchone()
+    return apiarist
 
 def getCursor():
     global dbconn
@@ -27,13 +33,7 @@ def getCursor():
     database=connect.dbname, autocommit=True)
     dbconn = connection.cursor()
     return dbconn
-def getUser():
-    username = session["user"]
-    print(username)
-    connection=getCursor()
-    connection.execute("Select * from apiarists where username=%s",(username,))
-    apiarist=connection.fetchone()
-    return apiarist
+
 
 @app.route("/apiarists/dashboard")
 def apiarists_dashboard ():
@@ -56,11 +56,11 @@ def user():
         return redirect(url_for("login"))
     
 @app.route("/user/profile")
-def self_managing():
+def user_self_managing():
     
     if "user" in session:
         user = session["user"]  
-        return render_template("user.html",apiarist=getUser(),user=user)
+        return render_template("profile.html",role=getUser(),user=user)
     else:
         return redirect(url_for("login"))
     
