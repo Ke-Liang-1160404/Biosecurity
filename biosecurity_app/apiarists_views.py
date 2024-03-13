@@ -118,7 +118,7 @@ def edit_password():
              connection.execute("UPDATE apiarists SET password=%s where username=%s;", (hashed_new,username))
              msg="You have updated your password successfully"
              password_reset=True
-             return render_template("user.html", msg=msg,user=username, password_reset=password_reset, apiarist=getUser())
+             return render_template("profile.html", msg=msg,user=username, password_reset=password_reset, role=getUser())
 
          else:
              msg ="Please confrim your re-typed password match the new password"
