@@ -118,6 +118,8 @@ def guide_admin():
   if "admin" in session:
         admin = session["admin"] 
         all_pest()
-  return render_template("guide.html", admin=admin, all_pest=all_pest())
-
+        return render_template("guide.html", admin=admin, all_pest=all_pest())
+  
+  else:
+        return redirect(url_for("login"))
 
