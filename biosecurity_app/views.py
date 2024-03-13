@@ -163,20 +163,23 @@ def login():
           #---------query the apiarist from database-----------#
 
           connection=getCursor()
-          connection.execute("select username,password from apiarists where username=%s and password=%s;", (username,hashed,))
+          connection.execute("select username,password from apiarists where username=%s and password=%s and status=1;", (username,hashed,))
           user=connection.fetchone()
-         
+          connection.execute("select username,password from apiarists where username=%s and password=%s and status=0;", (username,hashed,))
+          inactive_user=connection.fetchone()
           #---------query the staff from database-----------#
 
 
-          connection.execute("select username,password,position from staff_admin where username=%s and password=%s and position != 'admin';",(username,hashed,))
+          connection.execute("select username,password,position from staff_admin where username=%s and password=%s and position != 'admin' and status=1;",(username,hashed,))
           staff=connection.fetchone()
-         
+          connection.execute("select username,password,position from staff_admin where username=%s and password=%s and status=0;", (username,hashed,))
+          inactive_staff=connection.fetchone()
 
           #---------query the admin from database-----------#
 
           connection.execute("select username,password,position from staff_admin where username=%s and password=%s and position='admin';",(username,hashed,))
           admin=connection.fetchone()
+       
 
           #---------compared the user input to check user's role if no position, then user is an apiarists-----------#
       
@@ -191,6 +194,15 @@ def login():
           elif admin is not None and admin[0] == username:
             session["admin"] =username
             return redirect(url_for("home",admin=admin))
+          elif inactive_user is not None and inactive_user[0] == username:
+             msg='user is not avtive please conntact an admin to activate your account admin email: john.murray123@admin.com'
+             
+             return render_template("login.html", msg=msg, toLogin=toLogin)
+          elif inactive_staff is not None and inactive_staff[0] == username:
+             msg='staff account is not avtive please conntact an admin to activate your account admin email: john.murray123@admin.com'
+             
+             return render_template("login.html", msg=msg, toLogin=toLogin)
+
           
           #---------Not matching any role from database-----------#
           
