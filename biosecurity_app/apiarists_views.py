@@ -17,7 +17,13 @@ app.url_map.strict_slashes = False
 dbconn = None
 connection = None
 
-
+def getUser():
+    username = session["user"]
+    print(username)
+    connection=getCursor()
+    connection.execute("Select * from apiarists where username=%s",(username,))
+    apiarist=connection.fetchone()
+    return apiarist
 
 def getCursor():
     global dbconn
@@ -27,13 +33,7 @@ def getCursor():
     database=connect.dbname, autocommit=True)
     dbconn = connection.cursor()
     return dbconn
-def getUser():
-    username = session["user"]
-    print(username)
-    connection=getCursor()
-    connection.execute("Select * from apiarists where username=%s",(username,))
-    apiarist=connection.fetchone()
-    return apiarist
+
 
 @app.route("/apiarists/dashboard")
 def apiarists_dashboard ():
@@ -56,29 +56,33 @@ def user():
         return redirect(url_for("login"))
     
 @app.route("/user/profile")
-def self_managing():
+def user_self_managing():
     
     if "user" in session:
         user = session["user"]  
-        return render_template("user.html",apiarist=getUser(),user=user)
+        return render_template("profile.html",role=getUser(),user=user)
     else:
         return redirect(url_for("login"))
     
 @app.route("/user/profile/edit", methods=["POST"])
-def edit_profile():
+def user_edit_profile():
   if "user" in session:
         user = session["user"] 
-  edit_apiarist()
-  msg="Information Updated"
-  updated=True
-  return redirect(url_for('staffApiarists',user=user,msg=msg, updated=updated))
+        edit_apiarist()
+        msg="Information Updated"
+        updated=True
+        return redirect(url_for('staffApiarists',user=user,msg=msg, updated=updated))
+  else:
+        return redirect(url_for("login"))
 
 
 @app.route("/user/profile/password")
 def password():
   if "user" in session:
         user = session["user"] 
-  return render_template("password.html", user=user)
+        return render_template("password.html", user=user)
+  else:
+        return redirect(url_for("login"))
 
 @app.route("/user/profile/password/new", methods=["POST"])
 def edit_password():
@@ -88,7 +92,7 @@ def edit_password():
    if request.method =='POST':
 
      getUser()
-     print(getUser())
+
      oldPassword=request.form.get("old_password")
      newPassword=request.form.get("new_password")
      reNewPassword=request.form.get("re_new_password")
