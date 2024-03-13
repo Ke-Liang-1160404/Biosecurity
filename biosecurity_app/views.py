@@ -47,14 +47,18 @@ def redirect_based_on_role(html_file):
         return render_template(html_file)
     
 
-def choosing_role(role):
+def choosing_role():
     if "user" in session:
-        role=session["user"]
+        user=session["user"]
+        return user
     elif "staff" in session:
-        role = session["staff"] 
+        staff = session["staff"] 
+        return staff
     elif "admin" in session:
-        role = session["admin"] 
-    return role
+        admin = session["admin"] 
+        return admin
+
+
     
 def render_login_or_register(registered,toLogin, msg, username):
     if toLogin:
@@ -69,11 +73,14 @@ def index():
 @app.route("/reference")
 def reference():
     choosing_role()
+    print(choosing_role())
+
     return render_template('reference.html', user=choosing_role())
 
 @app.route("/home")
 def home():
     choosing_role()
+    print(choosing_role())
     return render_template('home.html', user=choosing_role())
    
 
