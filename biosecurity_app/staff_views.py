@@ -43,6 +43,18 @@ def edit_apiarist():
       connection=getCursor()
       sql="""UPDATE apiarists SET address=%s,phone=%s,email=%s,status=%s where apiarists_id=%s;"""
       connection.execute(sql,(address,phone,email,status,id,))
+
+def edit_staff():
+   if request.method == "POST":
+      address=request.form.get("address")
+      phone=request.form.get("phone")
+      email=request.form.get("email")
+
+      id=request.form.get("id")
+      print(address,phone,email,email)
+      connection=getCursor()
+      sql="""UPDATE staff_admin SET address=%s,work_phone_number=%s,email=%s where staff_id=%s;"""
+      connection.execute(sql,(address,phone,email,id,))
      
 def all_pest():
         connection=getCursor()
@@ -128,3 +140,22 @@ def staff_self_managing():
         return render_template("profile.html",role=getStaff("staff"),staff=staff)
     else:
         return redirect(url_for("login"))
+    
+@app.route("/staff/profile/edit", methods=["POST"])
+def staff_edit_profile():
+  if "staff" in session:
+        staff = session["staff"] 
+        edit_staff()
+        msg="Information Updated"
+        updated=True
+        return redirect(url_for('staffApiarists',staff=staff,msg=msg, updated=updated))
+
+  else:
+        return redirect(url_for("login"))
+  
+
+@app.route("/staff/profile/password")
+def staff_password():
+  if "staff" in session:
+        staff = session["staff"] 
+  return render_template("password.html", staff=staff)

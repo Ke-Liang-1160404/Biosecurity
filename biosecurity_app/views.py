@@ -182,15 +182,15 @@ def login():
       
           if user is not None and user[0] == username:
             session["user"] =username
-            return redirect(url_for("user", user=user))
+            return redirect(url_for("home", user=user))
           
           #---------check user's position, staff or admin-----------#
           elif staff is not None and staff[0] == username:
             session["staff"] =username
-            return redirect(url_for("staff",staff=staff))
+            return redirect(url_for("home",staff=staff))
           elif admin is not None and admin[0] == username:
             session["admin"] =username
-            return redirect(url_for("admin",admin=admin))
+            return redirect(url_for("home",admin=admin))
           
           #---------Not matching any role from database-----------#
           

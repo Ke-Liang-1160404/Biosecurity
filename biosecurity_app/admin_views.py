@@ -7,7 +7,7 @@ from flask_hashing import Hashing
 from datetime import datetime
 import re
 from biosecurity_app.views import getAllApiarists,getCursor
-from biosecurity_app.staff_views import get_single_apiarist,edit_apiarist,getStaff
+from biosecurity_app.staff_views import get_single_apiarist,edit_apiarist,getStaff,edit_staff
 from biosecurity_app.apiarists_views import all_pest
 
 
@@ -125,3 +125,24 @@ def admin_self_managing():
         return render_template("profile.html",role=getStaff("admin"),admin=admin)
     else:
         return redirect(url_for("login"))
+    
+
+@app.route("/admin/profile/edit", methods=["POST"])
+def admin_edit_profile():
+  if "admin" in session:
+        admin = session["admin"] 
+        edit_staff()
+        msg="Information Updated"
+        updated=True
+        return redirect(url_for('staffApiarists',admin=admin,msg=msg, updated=updated))
+
+  else:
+        return redirect(url_for("login"))
+
+
+
+@app.route("/admin/profile/password")
+def admin_password():
+  if "admin" in session:
+        admin = session["admin"] 
+  return render_template("password.html", admin=admin)

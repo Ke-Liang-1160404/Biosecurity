@@ -65,20 +65,24 @@ def user_self_managing():
         return redirect(url_for("login"))
     
 @app.route("/user/profile/edit", methods=["POST"])
-def edit_profile():
+def user_edit_profile():
   if "user" in session:
         user = session["user"] 
-  edit_apiarist()
-  msg="Information Updated"
-  updated=True
-  return redirect(url_for('staffApiarists',user=user,msg=msg, updated=updated))
+        edit_apiarist()
+        msg="Information Updated"
+        updated=True
+        return redirect(url_for('staffApiarists',user=user,msg=msg, updated=updated))
+  else:
+        return redirect(url_for("login"))
 
 
 @app.route("/user/profile/password")
 def password():
   if "user" in session:
         user = session["user"] 
-  return render_template("password.html", user=user)
+        return render_template("password.html", user=user)
+  else:
+        return redirect(url_for("login"))
 
 @app.route("/user/profile/password/new", methods=["POST"])
 def edit_password():

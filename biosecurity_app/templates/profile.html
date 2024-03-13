@@ -11,11 +11,11 @@
 </div>
 
 <form action="{% if 'staff' in session %}
-                  /staff/profile
+                  /staff/profile/edit
                 {% elif 'admin' in session %}
-                  /admin/profile
+                  /admin/profile/edit
                 {% elif 'user' in session %}
-                  /user/profile
+                  /user/profile/edit
                 {% endif %}" method="POST" class="bg-warning p-4 rounded">
   <div class="mx-auto p-2  form-floating form-group ">
     <input type="text" class="form-control" id="id" name="id"  value="{{role[0]}}" hidden readonly>
@@ -76,10 +76,22 @@
     <input type="text" class="form-control" id="status" name="status"  value="{{role[9]}}" hidden readonly>
 
   </div>
+  {% if "user" in session %}
+
   <div class="col-md-6">
    <a href="{{url_for('password')}}" class="btn btn-dark btn-lg me-2">Changing Password</a>
-
   </div>
+  {% elif "staff" in session %}
+  <div class="col-md-6">
+    <a href="{{url_for('staff_password')}}" class="btn btn-dark btn-lg me-2">Changing Password</a>
+   </div>
+  {% elif "admin" in session %}
+  <div class="col-md-6">
+    <a href="{{url_for('admin_password')}}" class="btn btn-dark btn-lg me-2">Changing Password</a>
+   </div>
+   {% endif %}
+  
+
     {% if password_reset %}
      <div class="alert alert-success"   role="alert">
       <p>
