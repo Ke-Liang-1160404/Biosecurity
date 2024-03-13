@@ -92,7 +92,7 @@ def edit_password():
    if request.method =='POST':
 
      getUser()
-     print(getUser())
+
      oldPassword=request.form.get("old_password")
      newPassword=request.form.get("new_password")
      reNewPassword=request.form.get("re_new_password")

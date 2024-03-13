@@ -145,4 +145,59 @@ def admin_edit_profile():
 def admin_password():
   if "admin" in session:
         admin = session["admin"] 
-  return render_template("password.html", admin=admin)
+        return render_template("password.html", admin=admin)
+  else:
+        return redirect(url_for("login"))
+  
+
+@app.route("/admin/profile/password/new", methods=["POST"])
+def admin_edit_password():
+  msg=""
+  if "admin" in session:
+   username = session["admin"] 
+   if request.method =='POST':
+
+     getStaff("admin")
+
+     oldPassword=request.form.get("old_password")
+     newPassword=request.form.get("new_password")
+     reNewPassword=request.form.get("re_new_password")
+     hashed_old=hashing.hash_value(oldPassword, salt="abcd")
+     hashed_new=hashing.hash_value(newPassword, salt="abcd")
+
+     connection=getCursor()
+     connection.execute("SELECT password from staff_admin where username=%s;", (username,))
+     password=connection.fetchone()
+     
+     password_reset=False
+     alert=False
+     if hashed_old == password[0]:
+         if newPassword == reNewPassword:
+
+            pattern = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
+            if not re.match(pattern ,newPassword):
+
+                   alert=True
+                   msg="Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character, and should be at least 8 characters long."
+                   return render_template("password.html", msg=msg, admin=admin, alert=alert)
+            else:
+             connection.execute("UPDATE staff_admin SET password=%s where username=%s;", (hashed_new,username))
+             msg="You have updated your password successfully"
+             password_reset=True
+             return render_template("profile.html", msg=msg,user=username, password_reset=password_reset, role=getStaff("admin"))
+
+         else:
+             msg ="Please confrim your re-typed password match the new password"
+
+             alert=True
+             return render_template("password.html", msg=msg, user=username, alert=alert)
+     else:
+         msg="Your password input was not correct, please try again"
+
+         alert=True
+         return render_template("password.html", msg=msg,user=username, alert=alert)
+    
+        
+
+  else:
+        return redirect(url_for("login"))
