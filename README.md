@@ -3,12 +3,22 @@ Description
 This is a Flask Python web application designed to function as a biosecurity guide, providing information on bee pests and diseases present in New Zealand, as well as those not currently found in the country.
 
 Account:
-Apiarist   
+Apiarist  : 
 
 michael_smith password1                                          
 emma_johnson password2                                      
-william_davis password3  keliang Password1                 
+william_davis password3  
+keliang Password1                 
 lincoln_uni  Password1
+
+Staff:
+emily_brown  password1 
+david_wilson    password2 
+sarah_jones     password3
+
+admin:
+Username: john_murray Password:password4
+
 
 Functional Requirements
 User Authentication: Implement a login system with password hashing and salting techniques.
