@@ -7,7 +7,7 @@ from flask_hashing import Hashing
 from datetime import datetime
 import re
 from biosecurity_app.views import getAllApiarists,getCursor
-from biosecurity_app.staff_views import get_single_apiarist,edit_apiarist,getStaff,edit_staff
+from biosecurity_app.staff_views import get_single_apiarist,edit_apiarist,getStaff,edit_staff,get_single_pest
 from biosecurity_app.apiarists_views import all_pest
 
 
@@ -199,5 +199,17 @@ def admin_edit_password():
     
         
 
+  else:
+        return redirect(url_for("login"))
+  
+
+
+@app.route("/admin/guide/<id>")
+def admin_pest(id):
+
+  if "admin" in session:
+        admin = session["admin"] 
+
+        return render_template("pest.html", pest=get_single_pest(id), admin=admin)
   else:
         return redirect(url_for("login"))

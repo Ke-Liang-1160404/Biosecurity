@@ -4,7 +4,15 @@
 
 {% block content %}
 
+{{pest}}
+{% if changed %}
 <H1 class="bg-warning">Pest and Disease Information</H1>
+<div class="alert alert-success"   role="alert">
+  <p>
+    {{msg}}
+  </p> 
+ </div>
+{% endif %}
 <div class="table-responsive">
   <table class="table table-striped table-bordered table-hover">
     <thead class="table-dark">
@@ -24,21 +32,26 @@
       {% for item in all_pest %}
       
       <tr>
-        <td>{{ item[1] }}</td>
+        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark"></a>{{ item[1] }}</a></td>
         <td>
           {% if item[2] == 1 %}
-          Native
+          <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">Active In New Zealand </a>
           {% else %}
-          Non-Native
+          Not Found in New Zealand
           {% endif %}
         </td>
-        <td>{{ item[3] }}</td>
-        <td>{{ item[4] }}</td>
-        <td>{{ item[5] }}</td>
-        <td>{{ item[6] }}</td>
-        <td>{{ item[7] }}</td>
+        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">{{ item[3] }}</a></td>
+
+        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">{{ item[4] }}</a></td>
+
+        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">{{ item[5] }}</a></td>
+
+        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">{{ item[6] }}</a></td>
+
+        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">{{ item[7] }}</a></td>
+
         <td>
-            <img src="/static/{{item[11]}}" alt="/static/{{item[11]}}">
+          <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark"><img src="/static/images/{{item[11]}}" alt="/static/{{item[11]}}"></a>
         </td>
 
       </tr>

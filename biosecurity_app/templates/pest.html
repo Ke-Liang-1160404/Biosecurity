@@ -4,6 +4,90 @@
 
 {% block content %}
 
-<p>pests</p>
+<form action="{% if 'staff' in session %}
+/staff/guide/pest/edit
+{% elif 'admin' in session %}
+/admin/guide/pest/edit
+{% elif 'user' in session %}
+
+/user/guide/pest/edit
+{% endif %}" method="POST" class="bg-warning p-4 rounded">
+{% if pest %}
+{% set item = pest[0] %}
+{{item}}
+  <div class="mx-auto p-2  form-floating form-group ">
+    <input type="text" class="form-control" id="id" name="id"  value="{{item[0]}}" hidden readonly>
+    <label for="id" class="form-label" hidden >ID</label>
+  </div>
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="Type" name="Type"  value="{{item[1]}}" readonly>
+    <label for="Type" class="form-label" >Type</label>
+  </div>
+  <div class="mx-auto p-2  form-floating form-group ">
+    <input type="text" class="form-control" id="Presnece" name="Presnece"  value=" {% if item[2] == 1 %}Active In New Zealand{% else %}Not Found in New Zealand{% endif %}" readonly>
+    <label for="Presnece" class="form-label" >Presnece</label>
+  </div>
+
+ 
+
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="commonName" name="commonName"  value="{{item[3]}}" readonly>
+    <label for="commonName" class="form-label" >Common Name</label>
+  </div>
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="ScientificName" name="ScientificName"  value="{{item[4]}}" readonly>
+    <label for="ScientificName" class="form-label" >Scientific Name</label>
+  </div>
+  
+  <div class="mx-auto p-2  form-floating form-group">
+  
+    <input type="text" class="form-control" id="chracter" name="chracter"  value="{{item[5]}}" readonly>
+    <label for="chracter" class="form-label" >Key Characteristics</label>
+  </div>
+  
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="bioDescription" name="bioDescription"  value="{{item[6]}}" readonly>
+    <label for="bioDescription" class="form-label" >Biology Description</label> 
+  </div>
+
+  
+  <div class="mx-auto p-2  form-floating form-group">
+    <input type="text" class="form-control" id="symptoms" name="symptoms"  value="{{item[7]}}" readonly>
+    <label for="symptoms" class="form-label" >Symptoms</label>
+  </div>
+  {% endif %}
+
+
+  <div class="mx-auto p-2 form-floating form-group">
+    <select class="form-select my-auto" id="image" name="image" readonly>
+      {% if pest %}
+        <!-- Loop through each item in 'pest' -->
+        {% for item in pest %}
+        {{ item[-1] }}
+          <option value="{{ item[-1] }}">
+            <!-- Display the image URL as an option -->
+            {{ item[-1] }}
+          </option>
+        {% endfor %}
+      {% endif %}
+    </select>
+    <label for="image" class="form-label">Primary Picture
+    </label>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+    </div>
+    <div class="col-md-6 text-end">
+      <button type="submit" class="btn btn-dark">Changing Picture</button>
+    </div>
+  </div>
+  
+  
+</form>
+
+
+
 
 {% endblock %}
