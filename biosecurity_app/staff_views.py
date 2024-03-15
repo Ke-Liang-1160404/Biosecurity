@@ -118,44 +118,11 @@ def guide_staff():
         all_pest()
 
        
-  return render_template("guide.html", staff=staff, all_pest=all_pest() )
+        return render_template("guide.html", staff=staff, all_pest=all_pest() )
 
-
-@app.route("/staff/guide/<id>")
-def staff_pest(id):
-
-  if "staff" in session:
-        staff = session["staff"] 
-
-        return render_template("pest.html", pest=get_single_pest(id), staff=staff)
   else:
         return redirect(url_for("login"))
-  
-@app.route("/staff/guide/pest/edit", methods=['POST'])
-def staff_pest_edit():
-  changed= False
-  if "staff" in session:
-      if request.method =='POST':
-        staff = session["staff"] 
-        id=request.form.get("id")
-        character=request.form.get("chracter")
-        bio=request.form.get("bioDescription")
-        symptoms=request.form.get("symptoms")
-        image=request.form.get("image")
-        
-        
-        connection=getCursor()
-        connection.execute("select * from images where image_url=%s", (image,))
-        updated_image=connection.fetchone()
-        
-        
-        connection.execute("UPDATE pest_disease SET key_characteristics=%s, biology_description=%s, symptoms=%s,primary_image=%s where id=%s;", (character,bio,symptoms,updated_image[0],id,) )
-        msg="successfully"
-        changed=True
-        return redirect(url_for("guide_staff", staff=staff, all_pest=all_pest(), msg=msg, changed=changed))
-  else:
-        return redirect(url_for("login"))
-  
+
 
 @app.route("/staff/profile")
 def staff_self_managing():
@@ -237,6 +204,43 @@ def staff_edit_password():
     
         
 
+  else:
+        return redirect(url_for("login"))
+  
+
+
+@app.route("/staff/guide/<id>")
+def staff_pest(id):
+
+  if "staff" in session:
+        staff = session["staff"] 
+
+        return render_template("pest.html", pest=get_single_pest(id), staff=staff)
+  else:
+        return redirect(url_for("login"))
+  
+@app.route("/staff/guide/pest/edit", methods=['POST'])
+def staff_pest_edit():
+  changed= False
+  if "staff" in session:
+      if request.method =='POST':
+        staff = session["staff"] 
+        id=request.form.get("id")
+        character=request.form.get("chracter")
+        bio=request.form.get("bioDescription")
+        symptoms=request.form.get("symptoms")
+        image=request.form.get("image")
+        
+        
+        connection=getCursor()
+        connection.execute("select * from images where image_url=%s", (image,))
+        updated_image=connection.fetchone()
+        
+        
+        connection.execute("UPDATE pest_disease SET key_characteristics=%s, biology_description=%s, symptoms=%s,primary_image=%s where id=%s;", (character,bio,symptoms,updated_image[0],id,) )
+        msg="successfully"
+        changed=True
+        return redirect(url_for("guide_staff", staff=staff, all_pest=all_pest(), msg=msg, changed=changed))
   else:
         return redirect(url_for("login"))
   

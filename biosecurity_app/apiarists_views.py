@@ -6,7 +6,7 @@ import connect
 from flask_hashing import Hashing
 from datetime import datetime
 import re
-from biosecurity_app.staff_views import edit_apiarist,all_pest
+from biosecurity_app.staff_views import edit_apiarist,all_pest,get_single_pest
 
 
 
@@ -143,6 +143,44 @@ def guide_apiarist():
         all_pest()
   
   return render_template("guide.html", user=user, all_pest=all_pest())
+
+
+
+
+@app.route("/user/guide/<id>")
+def user_pest(id):
+
+  if "user" in session:
+        user = session["user"] 
+
+        return render_template("pest.html", pest=get_single_pest(id), user=user)
+  else:
+        return redirect(url_for("login"))
+  
+@app.route("/user/guide/pest/edit", methods=['POST'])
+def user_pest_edit():
+  changed= False
+  if "user" in session:
+      if request.method =='POST':
+        user = session["user"] 
+        id=request.form.get("id")
+        character=request.form.get("chracter")
+        bio=request.form.get("bioDescription")
+        symptoms=request.form.get("symptoms")
+        image=request.form.get("image")
+        
+        
+        connection=getCursor()
+        connection.execute("select * from images where image_url=%s", (image,))
+        updated_image=connection.fetchone()
+        
+        
+        connection.execute("UPDATE pest_disease SET key_characteristics=%s, biology_description=%s, symptoms=%s,primary_image=%s where id=%s;", (character,bio,symptoms,updated_image[0],id,) )
+        msg="successfully"
+        changed=True
+        return redirect(url_for("guide_apiarist", user=user, all_pest=all_pest(), msg=msg, changed=changed))
+  else:
+        return redirect(url_for("login"))
   
 
 

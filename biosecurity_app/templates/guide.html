@@ -32,26 +32,98 @@
       {% for item in all_pest %}
       
       <tr>
-        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark"></a>{{ item[1] }}</a></td>
+        <td> <a href="
+          {% if 'staff' in session %}
+          {{url_for('staff_pest', id=item[0])}}
+          {% elif 'admin' in session %}
+          {{url_for('admin_pest', id=item[0])}}
+
+          {% elif 'user' in session %}
+          {{url_for('user_pest', id=item[0])}}
+          {% endif %}
+          " class="text-decoration-none text-dark">{{ item[1] }}</a></td>
         <td>
           {% if item[2] == 1 %}
-          <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">Active In New Zealand </a>
+         <a href="
+          {% if 'staff' in session %}
+          {{url_for('staff_pest', id=item[0])}}
+          {% elif 'admin' in session %}
+          {{url_for('admin_pest', id=item[0])}}
+
+          {% elif 'user' in session %}
+          {{url_for('user_pest', id=item[0])}}
+          {% endif %}
+          " class="text-decoration-none text-dark">Active In New Zealand </a>
           {% else %}
           Not Found in New Zealand
           {% endif %}
         </td>
-        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">{{ item[3] }}</a></td>
+        <td><a href="
+          {% if 'staff' in session %}
+          {{url_for('staff_pest', id=item[0])}}
+          {% elif 'admin' in session %}
+          {{url_for('admin_pest', id=item[0])}}
 
-        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">{{ item[4] }}</a></td>
+          {% elif 'user' in session %}
+          {{url_for('user_pest', id=item[0])}}
+          {% endif %}
+          " class="text-decoration-none text-dark">{{ item[3] }}</a></td>
 
-        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">{{ item[5] }}</a></td>
+        <td><a href="
+          {% if 'staff' in session %}
+          {{url_for('staff_pest', id=item[0])}}
+          {% elif 'admin' in session %}
+          {{url_for('admin_pest', id=item[0])}}
 
-        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">{{ item[6] }}</a></td>
+          {% elif 'user' in session %}
+          {{url_for('user_pest', id=item[0])}}
+          {% endif %}
+          " class="text-decoration-none text-dark">{{ item[4] }}</a></td>
 
-        <td> <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark">{{ item[7] }}</a></td>
+        <td><a href="
+          {% if 'staff' in session %}
+          {{url_for('staff_pest', id=item[0])}}
+          {% elif 'admin' in session %}
+          {{url_for('admin_pest', id=item[0])}}
+
+          {% elif 'user' in session %}
+          {{url_for('user_pest', id=item[0])}}
+          {% endif %}
+          " class="text-decoration-none text-dark">{{ item[5] }}</a></td>
+
+        <td><a href="
+          {% if 'staff' in session %}
+          {{url_for('staff_pest', id=item[0])}}
+          {% elif 'admin' in session %}
+          {{url_for('admin_pest', id=item[0])}}
+
+          {% elif 'user' in session %}
+          {{url_for('user_pest', id=item[0])}}
+          {% endif %}
+          " class="text-decoration-none text-dark">{{ item[6] }}</a></td>
+
+        <td><a href="
+          {% if 'staff' in session %}
+          {{url_for('staff_pest', id=item[0])}}
+          {% elif 'admin' in session %}
+          {{url_for('admin_pest', id=item[0])}}
+
+          {% elif 'user' in session %}
+          {{url_for('user_pest', id=item[0])}}
+          {% endif %}
+          " class="text-decoration-none text-dark">{{ item[7] }}</a></td>
 
         <td>
-          <a href="{{url_for('staff_pest', id=item[0])}}" class="text-decoration-none text-dark"><img src="/static/images/{{item[11]}}" alt="/static/{{item[11]}}"></a>
+         <a href="
+          {% if 'staff' in session %}
+          {{url_for('staff_pest', id=item[0])}}
+          {% elif 'admin' in session %}
+          {{url_for('admin_pest', id=item[0])}}
+
+          {% elif 'user' in session %}
+          {{url_for('user_pest', id=item[0])}}
+          {% endif %}
+          " class="text-decoration-none text-dark"><img src="/static/images/{{item[11]}}" alt="/static/{{item[11]}}"></a>
         </td>
 
       </tr>

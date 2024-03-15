@@ -213,3 +213,31 @@ def admin_pest(id):
         return render_template("pest.html", pest=get_single_pest(id), admin=admin)
   else:
         return redirect(url_for("login"))
+  
+
+  
+@app.route("/admin/guide/pest/edit", methods=['POST'])
+def admin_pest_edit():
+  changed= False
+  if "admin" in session:
+      if request.method =='POST':
+        admin = session["admin"] 
+        id=request.form.get("id")
+        character=request.form.get("chracter")
+        bio=request.form.get("bioDescription")
+        symptoms=request.form.get("symptoms")
+        image=request.form.get("image")
+        
+        
+        connection=getCursor()
+        connection.execute("select * from images where image_url=%s", (image,))
+        updated_image=connection.fetchone()
+        
+        
+        connection.execute("UPDATE pest_disease SET key_characteristics=%s, biology_description=%s, symptoms=%s,primary_image=%s where id=%s;", (character,bio,symptoms,updated_image[0],id,) )
+        msg="successfully"
+        changed=True
+        return redirect(url_for("guide_admin", admin=admin, all_pest=all_pest(), msg=msg, changed=changed))
+  else:
+        return redirect(url_for("login"))
+  
