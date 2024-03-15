@@ -68,7 +68,7 @@ def render_login_or_register(registered,toLogin, msg, username):
 
 @app.route("/")
 def index():
-    return redirect_based_on_role('base.html')
+    return redirect_based_on_role('home.html')
 
 @app.route("/reference")
 def reference():
